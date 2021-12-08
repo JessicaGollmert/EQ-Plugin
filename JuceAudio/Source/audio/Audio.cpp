@@ -36,11 +36,14 @@ void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& mes
 { 
     if (message.isNoteOnOrOff())
     {
-//        if (message.getVelocity() == 0)
-//        {
-//            DBG ("Note Off")
-//        }
-        DBG ("Note On : Channel " << message.getChannel() << " , Note Number " << message.getNoteNumber() << " , Note in Hertz " << message.getMidiNoteInHertz(message.getNoteNumber()) << "Hz , Velocity " << message.getVelocity());
+        if (message.getVelocity() == 0)
+        {
+            DBG ("Note Off");
+        }
+        else
+        {
+            DBG ("Note On : Channel " << message.getChannel() << " , Note Number " << message.getNoteNumber() << " , Note in Hertz " << message.getMidiNoteInHertz(message.getNoteNumber()) << "Hz , Velocity " << message.getVelocity());
+        }
 
         // use oscillator.setNote to avoid having to do this calculation
         auto frequency = MidiMessage::getMidiNoteInHertz(message.getNoteNumber());

@@ -29,7 +29,7 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::resized()
 {
-    waveSelector.setBounds(0, 50, getWidth(), 50);
+    waveSelector.setBounds(0, 0, getWidth(), 50);
 }
 
 void MainComponent::paint (Graphics& g)
