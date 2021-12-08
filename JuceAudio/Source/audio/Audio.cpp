@@ -69,8 +69,10 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     while(numSamples--)
     {
         auto output = oscPtr.load()->nextSample();
-        *outL = output;
-        *outR = output;
+//        *outL = output;
+//        *outR = output;
+        *outL = 0.0f;
+        *outR = 0.0f;
         
         inL++;
         outL++;

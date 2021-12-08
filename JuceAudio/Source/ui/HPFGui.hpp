@@ -22,6 +22,7 @@ public:
     
     void setHPF (HighPassFilter* hpfPtr) { hpf = hpfPtr; }
         
+    void paint (juce::Graphics&) override;
     //Component
     void resized() override;
     //Slider::Listener
@@ -32,7 +33,8 @@ private:
     HighPassFilter* hpf {nullptr};  //pointer to an hpf object
     
     Slider frequencySlider;
-    Slider resonanceSlider;
-//    Slider gain;
+    Label frequencyLabel { "Freq", "Fequency" }; // 1st ID, 2nd text shown
     
+    Slider resonanceSlider;
+    Label resonanceLabel { "Res", "Resonance" };
 };

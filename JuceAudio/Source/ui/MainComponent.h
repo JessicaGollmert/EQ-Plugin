@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "../audio/Audio.h"
+#include "HPFGui.hpp"
 
 //==============================================================================
 /*
@@ -56,6 +57,8 @@ private:
     Audio& audio;
     
     ComboBox waveSelector;
+    
+    HPFGui highPassGui;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

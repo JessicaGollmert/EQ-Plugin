@@ -11,7 +11,7 @@
 //==============================================================================
 MainComponent::MainComponent (Audio& a) :   audio (a)
 {
-    setSize (600, 400);
+    setSize (900, 600);
     
     waveSelector.setText("Wave Type Selector");
     waveSelector.setJustificationType(Justification::centred);
@@ -19,6 +19,8 @@ MainComponent::MainComponent (Audio& a) :   audio (a)
     waveSelector.addItem("Square Wave", 2);
     waveSelector.addListener(this);
     addAndMakeVisible(waveSelector);
+    
+    addAndMakeVisible(highPassGui);
 }
 
 MainComponent::~MainComponent()
@@ -30,17 +32,24 @@ MainComponent::~MainComponent()
 void MainComponent::resized()
 {
     waveSelector.setBounds(0, 0, getWidth(), 50);
+    
+    const auto paddingX = 5;
+    const auto paddingY = 290;
+    const auto width = 120;
+    const auto height = getHeight();
+
+    highPassGui.setBounds (paddingX, paddingY, width, height);
 }
 
 void MainComponent::paint (Graphics& g)
 {
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll (Colours::black);
 }
 
 //MenuBarCallbacks==============================================================
 StringArray MainComponent::getMenuBarNames()
 {
-    auto names = { "File" };
+    auto names = { "Settings" };
     return StringArray (names);
 }
 
@@ -48,7 +57,9 @@ PopupMenu MainComponent::getMenuForIndex (int topLevelMenuIndex, const String& m
 {
     PopupMenu menu;
     if (topLevelMenuIndex == 0)
+    {
         menu.addItem(AudioPrefs, "Audio Prefrences", true, false);
+    }
     return menu;
 }
 
