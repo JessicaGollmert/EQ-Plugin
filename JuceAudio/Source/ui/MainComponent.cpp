@@ -21,6 +21,8 @@ MainComponent::MainComponent (Audio& a) :   audio (a)
     addAndMakeVisible(waveSelector);
     
     addAndMakeVisible(highPassGui);
+    
+    addAndMakeVisible(lowPassGui);
 }
 
 MainComponent::~MainComponent()
@@ -36,9 +38,11 @@ void MainComponent::resized()
     const auto paddingX = 5;
     const auto paddingY = 290;
     const auto width = 120;
-    const auto height = getHeight();
+    const auto height = 310;
 
     highPassGui.setBounds (paddingX, paddingY, width, height);
+    
+    lowPassGui.setBounds(775, paddingY, width, height);
 }
 
 void MainComponent::paint (Graphics& g)

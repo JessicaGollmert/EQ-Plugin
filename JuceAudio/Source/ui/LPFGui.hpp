@@ -1,26 +1,26 @@
 //
-//  HPFGui.hpp
+//  LPFGui.hpp
 //  JuceAudio - App
 //
-//  Created by Jessica Gollmert on 08/12/2021.
+//  Created by Jessica Gollmert on 11/12/2021.
 //  Copyright © 2021 UWE. All rights reserved.
 //
 
 #pragma once
 
 #include <JuceHeader.h>
-#include "../audio/HPF.hpp"
+#include "../audio/LPF.hpp"
 
-class HPFGui :   public Component,
+class LPFGui :   public Component,
                  public Slider::Listener
 {
 public:
     /** Constructor */
-    HPFGui();
+    LPFGui();
     /** Destructor */
-    ~HPFGui();
+    ~LPFGui();
     
-    void setHPF (HighPassFilter* hpfPtr) { hpf = hpfPtr; }
+    void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
         
     void paint (juce::Graphics&) override;
     //Component
@@ -32,7 +32,7 @@ public:
 
     
 private:
-    HighPassFilter* hpf {nullptr};  //pointer to an hpf object
+    LowPassFilter* lpf {nullptr};  //pointer to an hpf object
     
     Slider frequencySlider;
     Label frequencyLabel { "Freq", "Fequency" }; // 1st ID, 2nd text shown

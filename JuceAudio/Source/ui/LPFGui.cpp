@@ -1,14 +1,14 @@
 //
-//  HPFGui.cpp
+//  LPFGui.cpp
 //  JuceAudio - App
 //
-//  Created by Jessica Gollmert on 08/12/2021.
+//  Created by Jessica Gollmert on 11/12/2021.
 //  Copyright © 2021 UWE. All rights reserved.
 //
 
-#include "HPFGui.hpp"
+#include "LPFGui.hpp"
 
-HPFGui::HPFGui()
+LPFGui::LPFGui()
 {
     frequencySlider.setNormalisableRange(NormalisableRange<double> { 0.0f, 1000.0f, 0.01f, 0.6f } );
     frequencySlider.setTextValueSuffix (" Hz");
@@ -18,24 +18,24 @@ HPFGui::HPFGui()
     setSliderAndLabel(resonanceSlider, resonanceLabel);
 }
 
-HPFGui::~HPFGui()
+LPFGui::~LPFGui()
 {
     
 }
 
-void HPFGui::paint (juce::Graphics& g)
+void LPFGui::paint (juce::Graphics& g)
 {
     auto bounds = getLocalBounds().reduced (5);
     
     g.fillAll(Colours::darkred);
     g.setColour(Colours::white);
     g.setFont(20.0f);
-    g.drawText("HPF", bounds.removeFromBottom (30.0f).withX (5), Justification::centred); //removeFromBottom
+    g.drawText("LPF", bounds.removeFromBottom (30.0f).withX (5), Justification::centred); //removeFromBottom
     g.drawRoundedRectangle(bounds.toFloat(), 1.0f, 2.0f);
 }
 
 
-void HPFGui::resized()
+void LPFGui::resized()
 {
     const auto startY = 40;
     const auto startX = 10;
@@ -53,12 +53,12 @@ void HPFGui::resized()
 }
 
 
-void HPFGui::sliderValueChanged(Slider* slider)
+void LPFGui::sliderValueChanged(Slider* slider)
 {
     
 }
 
-void HPFGui::setSliderAndLabel(Slider& slider, Label& label)
+void LPFGui::setSliderAndLabel(Slider& slider, Label& label)
 {
     slider.setSliderStyle(Slider::Rotary);
     slider.setTextBoxStyle(Slider::TextBoxBelow, false, 70, 25);
