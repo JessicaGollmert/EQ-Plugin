@@ -16,7 +16,7 @@ class BPFGui :   public Component,
 {
 public:
     /** Constructor */
-    BPFGui(String name);
+    BPFGui(String name, float minFreq, float maxFreq);
     /** Destructor */
     ~BPFGui();
     
@@ -35,7 +35,7 @@ private:
     BandPassFilter* bpf {nullptr};  //pointer to an hpf object
     
     Slider frequencySlider;
-    Label frequencyLabel { "Freq", "Fequency" }; // 1st ID, 2nd text shown
+    Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
     
     Slider resonanceSlider;
     Label resonanceLabel { "Res", "Resonance" };

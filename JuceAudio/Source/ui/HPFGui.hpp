@@ -35,7 +35,7 @@ private:
     HighPassFilter* hpf {nullptr};  //pointer to an hpf object
     
     Slider frequencySlider;
-    Label frequencyLabel { "Freq", "Fequency" }; // 1st ID, 2nd text shown
+    Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
     
     Slider resonanceSlider;
     Label resonanceLabel { "Res", "Resonance" };

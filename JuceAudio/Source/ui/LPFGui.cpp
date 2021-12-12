@@ -10,7 +10,7 @@
 
 LPFGui::LPFGui()
 {
-    frequencySlider.setNormalisableRange(NormalisableRange<double> { 0.0f, 1000.0f, 0.01f, 0.6f } );
+    frequencySlider.setNormalisableRange(NormalisableRange<double> { 8000.0f, 20000.0f, 0.01f, 0.6f } );
     frequencySlider.setTextValueSuffix (" Hz");
     setSliderAndLabel(frequencySlider, frequencyLabel);
     
@@ -65,7 +65,7 @@ void LPFGui::setSliderAndLabel(Slider& slider, Label& label)
     slider.addListener(this);
     addAndMakeVisible(slider);
 
-    label.setColour(Label::ColourIds::textColourId, Colours::white);
+    label.setColour(Label::ColourIds::textColourId, Colours::lightblue);
     label.setFont(15.0f);
     label.setJustificationType(Justification::centred);
     addAndMakeVisible(label);
