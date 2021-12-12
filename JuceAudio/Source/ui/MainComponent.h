@@ -12,6 +12,7 @@
 #include "../audio/Audio.h"
 #include "HPFGui.hpp"
 #include "LPFGui.hpp"
+#include "BPFGui.hpp"
 
 //==============================================================================
 /*
@@ -61,6 +62,10 @@ private:
     
     HPFGui highPassGui;
     LPFGui lowPassGui;
+    BPFGui bandPassGui1;
+    BPFGui bandPassGui2;
+    BPFGui bandPassGui3;
+
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
