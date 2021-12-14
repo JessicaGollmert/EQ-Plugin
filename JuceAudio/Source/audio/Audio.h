@@ -13,6 +13,7 @@
 #include <atomic>
 #include "SinOscillator.h"
 #include "SquareOscillator.hpp"
+#include "FilePlayback.hpp"
 
 
 /** Class containing all audio processes */
@@ -30,6 +31,8 @@ public:
     /** Returns the audio device manager, don't keep a copy of it! */
     AudioDeviceManager& getAudioDeviceManager() { return audioDeviceManager;}
     
+    FilePlayback* getFilePlayer();
+    
     void handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message) override;
     
     void audioDeviceIOCallback (const float** inputChannelData,
@@ -40,13 +43,8 @@ public:
     void audioDeviceAboutToStart (AudioIODevice* device) override;
     void audioDeviceStopped() override;
     
-    int switchWaves (int ID);
-    
 private:
     AudioDeviceManager audioDeviceManager;
-    
-    SinOscillator oscillatorSin;
-    SquareOscillator oscillatorSquare;
-
-    std::atomic<Oscillator*> oscPtr;
+    AudioSourcePlayer audioSourcePlayer;
+    FilePlayback filePlayer;
 };

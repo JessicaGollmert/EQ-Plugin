@@ -13,6 +13,7 @@
 #include "HPFGui.hpp"
 #include "LPFGui.hpp"
 #include "BPFGui.hpp"
+#include "PlaybackGui.hpp"
 
 //==============================================================================
 /*
@@ -20,8 +21,7 @@
     your controls and content.
 */
 class MainComponent   : public Component,
-                        public MenuBarModel,
-                        public ComboBox::Listener
+                        public MenuBarModel
 {
 public:
     //==============================================================================
@@ -53,19 +53,15 @@ public:
     PopupMenu getMenuForIndex (int topLevelMenuIndex, const String& menuName) override;
     void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
     
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override;
-    
 private:
     Audio& audio;
-    
-    ComboBox waveSelector;
     
     HPFGui highPassGui;
     LPFGui lowPassGui;
     BPFGui bandPassGui1;
     BPFGui bandPassGui2;
     BPFGui bandPassGui3;
-
+    PlaybackGui playbackGui;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

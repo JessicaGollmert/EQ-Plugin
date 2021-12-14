@@ -17,18 +17,15 @@ MainComponent::MainComponent (Audio& a)
 {
     setSize (900, 700);
     
-//    waveSelector.setText("Wave Type Selector");
-//    waveSelector.setJustificationType(Justification::centred);
-//    waveSelector.addItem("Sine Wave", 1);
-//    waveSelector.addItem("Square Wave", 2);
-//    waveSelector.addListener(this);
-//    addAndMakeVisible(waveSelector);
+    playbackGui.setFilePlayer (audio.getFilePlayer());
+
+    addAndMakeVisible (highPassGui);
+    addAndMakeVisible (lowPassGui);
+    addAndMakeVisible (bandPassGui1);
+    addAndMakeVisible (bandPassGui2);
+    addAndMakeVisible (bandPassGui3);
     
-    addAndMakeVisible(highPassGui);
-    addAndMakeVisible(lowPassGui);
-    addAndMakeVisible(bandPassGui1);
-    addAndMakeVisible(bandPassGui2);
-    addAndMakeVisible(bandPassGui3);
+    addAndMakeVisible (playbackGui);
 }
 
 MainComponent::~MainComponent()
@@ -39,8 +36,6 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::resized()
 {
-//    waveSelector.setBounds(0, 0, getWidth(), 50);
-    
     const auto paddingX = 5;
     const auto paddingY = 290;
     const auto width = 120;
@@ -55,13 +50,15 @@ void MainComponent::resized()
     bandPassGui1.setBounds(195, paddingY, width, largeHeight); // left
     bandPassGui2.setBounds(getWidth() / 2 - halfWidth, paddingY, width, largeHeight); // middle
     bandPassGui3.setBounds(585, paddingY, width, largeHeight); // right
+    
+    playbackGui.setBounds(0, 5, getWidth(), getHeight());
 }
-
-// getWidth() / 2 - halfWidth = 390
 
 void MainComponent::paint (Graphics& g)
 {
     g.fillAll (Colours::black);
+    g.setColour(Colours::lightblue);
+    g.fillRoundedRectangle(0, 10, getWidth(), 270, 5);
 }
 
 //MenuBarCallbacks==============================================================
@@ -100,9 +97,3 @@ void MainComponent::menuItemSelected (int menuItemID, int topLevelMenuIndex)
         }
     }
 }
-
-void MainComponent::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
-{
-    audio.switchWaves(waveSelector.getSelectedId());
-}
-

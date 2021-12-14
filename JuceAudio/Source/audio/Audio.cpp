@@ -12,7 +12,7 @@
 
 Audio::Audio()
 {
-    oscPtr = &oscillatorSin;
+    audioSourcePlayer.setSource (&filePlayer);
     
     auto midiInputDevices = MidiInput::getAvailableDevices();
     if (midiInputDevices.size() > 0)
@@ -29,8 +29,15 @@ Audio::~Audio()
 {
     audioDeviceManager.removeAudioCallback (this);
     audioDeviceManager.removeMidiInputCallback ("", this);
+    
+    //remove the file player from the source
+    audioSourcePlayer.setSource (nullptr);
 }
 
+FilePlayback* Audio::getFilePlayer()
+{
+    return &filePlayer;
+}
 
 void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message)
 { 
@@ -44,13 +51,6 @@ void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& mes
         {
             DBG ("Note On : Channel " << message.getChannel() << " , Note Number " << message.getNoteNumber() << " , Note in Hertz " << message.getMidiNoteInHertz(message.getNoteNumber()) << "Hz , Velocity " << message.getVelocity());
         }
-
-        // use oscillator.setNote to avoid having to do this calculation
-        auto frequency = MidiMessage::getMidiNoteInHertz(message.getNoteNumber());
-        
-        oscPtr.load()->setGain(message.getFloatVelocity());
-
-        oscPtr.load()->setFrequency(frequency);
     }
 }
 
@@ -60,6 +60,9 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
                                            int numOutputChannels,
                                            int numSamples)
 {
+    // get the audio from our file player - player puts samples in the output buffer
+    audioSourcePlayer.audioDeviceIOCallback (inputChannelData, numInputChannels, outputChannelData, numOutputChannels, numSamples);
+    
     //All audio processing is done here
     const float* inL = inputChannelData[0];
 
@@ -68,11 +71,11 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     
     while(numSamples--)
     {
-        auto output = oscPtr.load()->nextSample();
-//        *outL = output;
-//        *outR = output;
-        *outL = 0.0f;
-        *outR = 0.0f;
+        float fileOutL = *outL;
+        float fileOutR = *outR;
+        
+        *outL = fileOutL;
+        *outR = fileOutR;
         
         inL++;
         outL++;
@@ -80,27 +83,12 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     }
 }
 
-
 void Audio::audioDeviceAboutToStart (AudioIODevice* device)
 {
-    oscPtr.load()->setSampleRate(device->getCurrentSampleRate());
+    audioSourcePlayer.audioDeviceAboutToStart (device);
 }
 
 void Audio::audioDeviceStopped()
 {
-
-}
-
- int Audio::switchWaves (int ID)
-{
-    if (ID == 1)
-    {
-        oscPtr = &oscillatorSin;
-    }
-    else if (ID == 2)
-    {
-        oscPtr = &oscillatorSquare;
-    }
-    
-    return ID;
+    audioSourcePlayer.audioDeviceStopped();
 }
