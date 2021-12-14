@@ -38,7 +38,7 @@ PlaybackGui::~PlaybackGui()
 //Component
 void PlaybackGui::resized()
 {
-        playButton.setBounds(15, 275, 100, 50);
+        playButton.setBounds(15, 280, 100, 50);
         stopButton.setBounds(785, playButton.getY(), 100, 50);
         fileChooser->setBounds (0, 0, getWidth(), 20);
 }

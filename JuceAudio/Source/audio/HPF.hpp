@@ -10,7 +10,8 @@
 
 #include <JuceHeader.h>
 
-class HighPassFilter : public IIRFilter
+class HighPassFilter : public IIRFilter,
+                       public IIRCoefficients
 {
     
 public:
