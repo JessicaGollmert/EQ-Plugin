@@ -18,17 +18,12 @@ BandPassFilter::~BandPassFilter()
     
 }
 
-void BandPassFilter::setType (dsp::StateVariableTPTFilterType newType)
+void BandPassFilter::setFilter(float sampleRate, float frequency, float Q)
 {
-    
+    bandPassFilter.setCoefficients(IIRCoefficients::makeBandPass (sampleRate, frequency, Q));
 }
 
-void BandPassFilter::setCutoffFrequency (float newFrequencyHz)
+void BandPassFilter::applyFilter(float *samples, int numSamples)
 {
-    
-}
-
-void BandPassFilter::setResonance (float newResonance)
-{
-    
+    bandPassFilter.processSamples(samples, numSamples);
 }

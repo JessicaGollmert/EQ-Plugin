@@ -14,6 +14,7 @@
 #include "LPFGui.hpp"
 #include "BPFGui.hpp"
 #include "PlaybackGui.hpp"
+#include "AudioVisualiser.hpp"
 
 //==============================================================================
 /*
@@ -62,6 +63,7 @@ private:
     BPFGui bandPassGui2;
     BPFGui bandPassGui3;
     PlaybackGui playbackGui;
+//    AudioVisualiser audioVisualiser;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

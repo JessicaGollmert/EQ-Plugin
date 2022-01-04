@@ -10,19 +10,20 @@
 
 #include <JuceHeader.h>
 
-class BandPassFilter : public IIRFilter
+class BandPassFilter
 {
     
 public:
     BandPassFilter();
     
     ~BandPassFilter();
+
+    void setFilter ( float sampleRate, float frequency, float Q );
     
-    
-    void setType (dsp::StateVariableTPTFilterType newType);
-    void setCutoffFrequency (float newFrequencyHz);
-    void setResonance (float newResonance);
+    void applyFilter (float* samples, int numSamples);
     
 private:
+    
+    IIRFilter bandPassFilter;
     
 };

@@ -18,17 +18,12 @@ HighPassFilter::~HighPassFilter()
     
 }
 
-void HighPassFilter::setType (dsp::StateVariableTPTFilterType newType)
+void HighPassFilter::setFilter( float sampleRate, float frequency, float Q )
 {
-    
+    highPassFilter.setCoefficients ( IIRCoefficients::makeLowPass (sampleRate, frequency, Q ) );
 }
 
-void HighPassFilter::setCutoffFrequency (float newFrequencyHz)
+void HighPassFilter::applyFilter(float *samples, int numSamples)
 {
-    
-}
-
-void HighPassFilter::setResonance (float newResonance)
-{
-    
+    highPassFilter.processSamples ( samples, numSamples );
 }

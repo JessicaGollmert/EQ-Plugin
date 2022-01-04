@@ -10,8 +10,7 @@
 
 #include <JuceHeader.h>
 
-class HighPassFilter : public IIRFilter,
-                       public IIRCoefficients
+class HighPassFilter
 {
     
 public:
@@ -20,10 +19,12 @@ public:
     ~HighPassFilter();
     
     
-    void setType (dsp::StateVariableTPTFilterType newType);
-    void setCutoffFrequency (float newFrequencyHz);
-    void setResonance (float newResonance);
+    void setFilter ( float sampleRate, float frequency, float Q );
+    
+    void applyFilter (float* samples, int numSamples);
     
 private:
+    
+    IIRFilter highPassFilter;
     
 };

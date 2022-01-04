@@ -11,9 +11,10 @@
 
 #include <JuceHeader.h>
 #include <atomic>
-#include "SinOscillator.h"
-#include "SquareOscillator.hpp"
 #include "FilePlayback.hpp"
+#include "BPF.hpp"
+#include "LPF.hpp"
+#include "HPF.hpp"
 
 
 /** Class containing all audio processes */
@@ -43,8 +44,13 @@ public:
     void audioDeviceAboutToStart (AudioIODevice* device) override;
     void audioDeviceStopped() override;
     
+    float samplerate = 0.0f;
+    
 private:
     AudioDeviceManager audioDeviceManager;
     AudioSourcePlayer audioSourcePlayer;
     FilePlayback filePlayer;
+    BandPassFilter bpf;
+    LowPassFilter lpf;
+    HighPassFilter hpf;
 };

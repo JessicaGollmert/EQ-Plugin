@@ -26,6 +26,8 @@ MainComponent::MainComponent (Audio& a)
     addAndMakeVisible (bandPassGui3);
     
     addAndMakeVisible (playbackGui);
+    
+//    addAndMakeVisible(audioVisualiser);
 }
 
 MainComponent::~MainComponent()
@@ -43,6 +45,8 @@ void MainComponent::resized()
     const auto height = 310; // small component
     const auto largeHeight = 405; // large component
 
+//    audioVisualiser.setBounds(0, 10, getWidth(), 270);
+    
     highPassGui.setBounds (paddingX, paddingY + 50, width, height);
     
     lowPassGui.setBounds(paddingX + 770, paddingY + 50, width, height);
@@ -51,14 +55,14 @@ void MainComponent::resized()
     bandPassGui2.setBounds(getWidth() / 2 - halfWidth, paddingY, width, largeHeight); // middle
     bandPassGui3.setBounds(585, paddingY, width, largeHeight); // right
     
-    playbackGui.setBounds(0, 5, getWidth(), getHeight());
+    playbackGui.setBounds(0, 5, getWidth(), 330);
 }
 
 void MainComponent::paint (Graphics& g)
 {
     g.fillAll (Colours::black);
     g.setColour(Colours::lightblue);
-    g.fillRoundedRectangle(0, 10, getWidth(), 270, 5);
+    g.fillRoundedRectangle(0, 10, getWidth(), 270, 10);
 }
 
 //MenuBarCallbacks==============================================================

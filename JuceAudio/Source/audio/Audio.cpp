@@ -69,10 +69,21 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     float *outL = outputChannelData[0];
     float *outR = outputChannelData[1];
     
+    bpf.setFilter(samplerate, 1000.0f, 0.1f);
+    lpf.setFilter(samplerate, 20000.0f, 0.1f);
+    hpf.setFilter(samplerate, 100.0f, 0.5f);
+    
     while(numSamples--)
     {
         float fileOutL = *outL;
         float fileOutR = *outR;
+        
+//        bpf.applyFilter(outL, numSamples);
+//        bpf.applyFilter(outR, numSamples);
+//        lpf.applyFilter(outL, numSamples);
+//        lpf.applyFilter(outR, numSamples);
+//        hpf.applyFilter(outL, numSamples);
+//        hpf.applyFilter(outR, numSamples);
         
         *outL = fileOutL;
         *outR = fileOutR;
@@ -86,6 +97,7 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
 void Audio::audioDeviceAboutToStart (AudioIODevice* device)
 {
     audioSourcePlayer.audioDeviceAboutToStart (device);
+    samplerate = device->getCurrentSampleRate();
 }
 
 void Audio::audioDeviceStopped()

@@ -60,6 +60,17 @@ void PlaybackGui::buttonClicked (Button* button)
     }
 }
 
+//if (looper->isPlaying())
+//{
+//    AlertWindow::showMessageBoxAsync (AlertWindow::WarningIcon,
+//                                      "Error", "Stop playback before loading", "OK",
+//                                      this);
+//}
+//else
+//{
+//    looper->load();
+//}
+
 void PlaybackGui::setFilePlayer (FilePlayback* fp)
 {
     filePlayer = fp;
