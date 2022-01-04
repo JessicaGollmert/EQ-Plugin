@@ -8,73 +8,66 @@
 
 #include "FilePlayback.hpp"
 
-FilePlayback::FilePlayback() : thread ("FilePlayThread")
+FilePlayback::FilePlayback()
 {
-    thread.startThread();
+    audioBuffer.setSize(2, 441000); // adjust to be flexible
+    audioBuffer.clear();
 }
 
 FilePlayback::~FilePlayback()
 {
-    audioTransportSource.setSource (nullptr);   //unload the current file
-    thread.stopThread (100);
+
 }
 
-void FilePlayback::setPlaying (bool newState)
+void FilePlayback::setPlayState (bool newState)
 {
-    if(newState == true)
-    {
-        audioTransportSource.setPosition (0.0);
-        audioTransportSource.start();
-    }
-    else
-    {
-        audioTransportSource.stop();
-    }
+    playState = newState;
 }
 
 bool FilePlayback::isPlaying () const
 {
-    return audioTransportSource.isPlaying();
+    return playState.load();
 }
 
-void FilePlayback::loadFile(const File& newFile)
+void FilePlayback::load ()
 {
-    // unload the previous file source and delete it..
-    setPlaying (false);
-    audioTransportSource.setSource (nullptr);
-    
-    // create a new file source from the file..
-    // get a format manager and set it up with the basic types (wav, ogg and aiff).
     AudioFormatManager formatManager;
     formatManager.registerBasicFormats();
     
-    if (auto reader = formatManager.createReaderFor (newFile))
+    FileChooser chooser ("Please select the file you want to load...",
+                         File::getSpecialLocation(File::userHomeDirectory),
+                         formatManager.getWildcardForAllFormats());
+    
+    if (chooser.browseForFileToOpen())
     {
-        //currentFile = audioFile;
-        currentAudioFileSource = std::make_unique<AudioFormatReaderSource> (reader, true);
+        File file (chooser.getResult());
+        std::unique_ptr<AudioFormatReader> reader (formatManager.createReaderFor (file));
         
-        // ..and plug it into our transport source
-        audioTransportSource.setSource (currentAudioFileSource.get(),
-                                   32768, // tells it to buffer this many samples ahead
-                                   &thread,
-                                   reader->sampleRate);
+        if (reader != nullptr)
+        {
+            audioBuffer.setSize(reader->numChannels, (int)reader->lengthInSamples);
+            reader->read (&audioBuffer, 0, (int)reader->lengthInSamples, 0, true, false);
+        }
     }
 }
 
-//AudioSource
-void FilePlayback::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
+float FilePlayback::processSample(float input)
 {
-    audioTransportSource.prepareToPlay (samplesPerBlockExpected, sampleRate);
-}
-
-void FilePlayback::releaseResources()
-{
-    audioTransportSource.releaseResources();
-}
-
-void FilePlayback::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
-{
-    audioTransportSource.getNextAudioBlock (bufferToFill);
+    auto output = 0.0f;
+//    float* audioSample;
+    
+    if (playState.load() == true)
+    {
+        //play
+        output = *audioBuffer.getWritePointer(0, bufferPosition);
+        
+        // increment and cycle buffer
+        if (++bufferPosition >= 441000)
+        {
+            bufferPosition = 0;
+        }
+    }
+    return output;
 }
 
 //void FilePlayback::setPosition(double newPosition)

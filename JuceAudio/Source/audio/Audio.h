@@ -48,7 +48,7 @@ public:
     
 private:
     AudioDeviceManager audioDeviceManager;
-    AudioSourcePlayer audioSourcePlayer;
+//    AudioSourcePlayer audioSourcePlayer;
     FilePlayback filePlayer;
     BandPassFilter bpf;
     LowPassFilter lpf;

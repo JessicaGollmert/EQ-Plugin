@@ -14,8 +14,7 @@
 
 /** Gui for the FilePlayer class */
 class PlaybackGui :   public Component,
-                        private Button::Listener,
-                        private FilenameComponentListener
+                      public Button::Listener
 {
 public:
     /** constructor - receives a reference to a FilePlayer object to control */
@@ -29,18 +28,17 @@ public:
     
     //Component
     void resized() override;
-
-private:
+    
     //Button Listener
     void buttonClicked (Button* button) override;
-    
-    //FilenameComponentListener
-    void filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged) override;
+
+private:
     
     TextButton playButton   { "Play" };
-    TextButton stopButton  { "Stop" };
-    std::unique_ptr<FilenameComponent> fileChooser;
+    TextButton loadButton  { "Load" };
     
     FilePlayback* filePlayer  { nullptr };
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PlaybackGui)
 };
 

@@ -11,23 +11,13 @@
 PlaybackGui::PlaybackGui()
 {
     playButton.addListener (this);
-    playButton.setColour (TextButton::buttonColourId, Colours::darkgrey);
+    playButton.setColour (TextButton::buttonColourId, Colours::green);
+    playButton.setColour (TextButton::buttonOnColourId, Colours::red);
     addAndMakeVisible (playButton);
     
-    stopButton.addListener(this);
-    stopButton.setColour (TextButton::buttonColourId, Colours::darkgrey);
-    addAndMakeVisible(stopButton);
-    
-    AudioFormatManager formatManager;
-    formatManager.registerBasicFormats();
-    fileChooser = std::make_unique<FilenameComponent> ("audiofile",
-                                                       File(),
-                                                       true, false, false,
-                                                       formatManager.getWildcardForAllFormats(),
-                                                       String(),
-                                                       "(select an audio file)");
-    fileChooser->addListener (this);
-    addAndMakeVisible (fileChooser.get());
+    loadButton.addListener(this);
+    loadButton.setColour (TextButton::buttonColourId, Colours::darkcyan);
+    addAndMakeVisible(loadButton);
 }
 
 PlaybackGui::~PlaybackGui()
@@ -39,59 +29,49 @@ PlaybackGui::~PlaybackGui()
 void PlaybackGui::resized()
 {
         playButton.setBounds(15, 280, 100, 50);
-        stopButton.setBounds(785, playButton.getY(), 100, 50);
-        fileChooser->setBounds (0, 0, getWidth(), 20);
+        loadButton.setBounds(785, playButton.getY(), 100, 50);
 }
 
 //Button Listener
 void PlaybackGui::buttonClicked (Button* button)
 {
+    if (filePlayer == nullptr)
+    {
+        return;
+    }
+    
     if (filePlayer != nullptr && button == &playButton)
     {
-        filePlayer->setPlaying( ! filePlayer->isPlaying());
-        playButton.setColour (TextButton::buttonColourId, Colours::green);
-        stopButton.setColour (TextButton::buttonColourId, Colours::darkgrey);
+        filePlayer->setPlayState( ! filePlayer->isPlaying());
+        playButton.setToggleState(filePlayer->isPlaying(), dontSendNotification);
+        if (filePlayer->isPlaying())
+        {
+            playButton.setButtonText("Stop");
+        }
+        else
+        {
+            playButton.setButtonText("Play");
+        }
     }
-    else if (filePlayer != nullptr && button == &stopButton)
+    else if (button == &loadButton)
     {
-        filePlayer->setPlaying(false);
-        stopButton.setColour (TextButton::buttonColourId, Colours::red);
-        playButton.setColour (TextButton::buttonColourId, Colours::darkgrey);
+        if (filePlayer->isPlaying())
+        {
+            AlertWindow::showMessageBoxAsync(AlertWindow::WarningIcon,
+                                             "Error", "Stop playback before loading", "OK",
+                                             this);
+        }
+        else
+        {
+            filePlayer->load();
+        }
     }
 }
-
-//if (looper->isPlaying())
-//{
-//    AlertWindow::showMessageBoxAsync (AlertWindow::WarningIcon,
-//                                      "Error", "Stop playback before loading", "OK",
-//                                      this);
-//}
-//else
-//{
-//    looper->load();
-//}
 
 void PlaybackGui::setFilePlayer (FilePlayback* fp)
 {
     filePlayer = fp;
 }
 
-//FilenameComponentListener
-void PlaybackGui::filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged)
-{
-    if (fileComponentThatHasChanged == fileChooser.get())
-    {
-        File audioFile (fileChooser->getCurrentFile().getFullPathName());
-        
-        if(filePlayer != nullptr && audioFile.existsAsFile())
-        {
-            filePlayer->loadFile(audioFile);
-        }
-        else
-        {
-            AlertWindow::showMessageBox (AlertWindow::WarningIcon,
-                                         "sdaTransport",
-                                         "Couldn't open file!\n\n");
-        }
-    }
-}
+
+

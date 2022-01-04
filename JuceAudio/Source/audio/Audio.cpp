@@ -12,7 +12,7 @@
 
 Audio::Audio()
 {
-    audioSourcePlayer.setSource (&filePlayer);
+//    audioSourcePlayer.setSource (&filePlayer);
     
     auto midiInputDevices = MidiInput::getAvailableDevices();
     if (midiInputDevices.size() > 0)
@@ -31,7 +31,7 @@ Audio::~Audio()
     audioDeviceManager.removeMidiInputCallback ("", this);
     
     //remove the file player from the source
-    audioSourcePlayer.setSource (nullptr);
+//    audioSourcePlayer.setSource (nullptr);
 }
 
 FilePlayback* Audio::getFilePlayer()
@@ -61,7 +61,7 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
                                            int numSamples)
 {
     // get the audio from our file player - player puts samples in the output buffer
-    audioSourcePlayer.audioDeviceIOCallback (inputChannelData, numInputChannels, outputChannelData, numOutputChannels, numSamples);
+//    audioSourcePlayer.audioDeviceIOCallback (inputChannelData, numInputChannels, outputChannelData, numOutputChannels, numSamples);
     
     //All audio processing is done here
     const float* inL = inputChannelData[0];
@@ -78,15 +78,18 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
         float fileOutL = *outL;
         float fileOutR = *outR;
         
+        auto outputL = filePlayer.processSample(fileOutL);
+        auto outputR = filePlayer.processSample(fileOutR);
+        
 //        bpf.applyFilter(outL, numSamples);
 //        bpf.applyFilter(outR, numSamples);
 //        lpf.applyFilter(outL, numSamples);
 //        lpf.applyFilter(outR, numSamples);
-//        hpf.applyFilter(outL, numSamples);
-//        hpf.applyFilter(outR, numSamples);
+        hpf.applyFilter(outL, numSamples);
+        hpf.applyFilter(outR, numSamples);
         
-        *outL = fileOutL;
-        *outR = fileOutR;
+        *outL = outputL;
+        *outR = outputR;
         
         inL++;
         outL++;
@@ -96,11 +99,11 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
 
 void Audio::audioDeviceAboutToStart (AudioIODevice* device)
 {
-    audioSourcePlayer.audioDeviceAboutToStart (device);
+//    audioSourcePlayer.audioDeviceAboutToStart (device);
     samplerate = device->getCurrentSampleRate();
 }
 
 void Audio::audioDeviceStopped()
 {
-    audioSourcePlayer.audioDeviceStopped();
+//    audioSourcePlayer.audioDeviceStopped();
 }

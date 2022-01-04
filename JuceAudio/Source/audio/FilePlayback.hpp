@@ -11,7 +11,7 @@
 #include <JuceHeader.h>
 
 /** Simple FilePlayer class - strams audio from a file. */
-class FilePlayback :  public AudioSource
+class FilePlayback
 {
 public:
     /** Constructor */
@@ -21,24 +21,20 @@ public:
     ~FilePlayback();
     
     /** Starts or stops playback of the looper */
-    void setPlaying (bool newState);
+    void setPlayState (bool newState);
     
     /** Gets the current playback state of the looper */
     bool isPlaying() const;
     
+    /** Processes the audio sample by sample. */
+    float processSample (float input);
+    
     /** Loads the specified file into the transport source */
-    void loadFile (const File& newFile);
-    
-    //AudioSource
-    void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
-    void releaseResources() override;
-    void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;
-    
-//    void setPosition (double newPosition);
+    void load ();
     
 private:
-    std::unique_ptr<AudioFormatReaderSource> currentAudioFileSource;    //reads audio from the file
-    AudioTransportSource audioTransportSource;            // this controls the playback of a positionable audio stream, handling the
-                                                        // starting/stopping and sample-rate conversion
-    TimeSliceThread thread;                             // thread for the transport source
+    std::atomic<int> playState {false};
+    
+    unsigned int bufferPosition {0};
+    AudioBuffer<float> audioBuffer;
 };
