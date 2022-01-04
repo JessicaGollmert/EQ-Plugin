@@ -10,7 +10,7 @@
 
 FilePlayback::FilePlayback()
 {
-    audioBuffer.setSize(2, 441000); // adjust to be flexible
+    audioBuffer.setSize(1, 441000); // adjust to be flexible
     audioBuffer.clear();
 }
 
@@ -60,6 +60,10 @@ float FilePlayback::processSample(float input)
     {
         //play
         output = *audioBuffer.getWritePointer(0, bufferPosition);
+        
+        //click 8 times each bufferLength
+        if ((bufferPosition % (441000 / 8)) == 0)
+            output += 0.1f;
         
         // increment and cycle buffer
         if (++bufferPosition >= 441000)
