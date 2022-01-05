@@ -32,6 +32,11 @@ Audio::~Audio()
     
     //remove the file player from the source
 //    audioSourcePlayer.setSource (nullptr);
+    
+    bpf.setFilter(samplerate, 1000.0f, 0.1f);
+    lpf.setFilter(samplerate, 20000.0f, 0.1f);
+    hpf.setFilter(samplerate, 100.0f, 0.5f);
+    
 }
 
 FilePlayback* Audio::getFilePlayer()
@@ -68,10 +73,6 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
 
     float *outL = outputChannelData[0];
     float *outR = outputChannelData[1];
-    
-    bpf.setFilter(samplerate, 1000.0f, 0.1f);
-    lpf.setFilter(samplerate, 20000.0f, 0.1f);
-    hpf.setFilter(samplerate, 100.0f, 0.5f);
     
     while(numSamples--)
     {
