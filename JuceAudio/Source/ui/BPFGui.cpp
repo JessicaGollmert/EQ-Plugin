@@ -13,11 +13,6 @@ BPFGui::BPFGui(String name, float minFreq, float maxFreq)
     componentName = name;
     
     frequencySlider.setNormalisableRange (NormalisableRange<double> { minFreq, maxFreq, 0.01f, 0.6f } );
-    frequencySlider.setTextValueSuffix (" Hz");
-    setSliderAndLabel(frequencySlider, frequencyLabel);
-    
-    resonanceSlider.setNormalisableRange (NormalisableRange<double> { 1.0f, 10.0f, 0.01f } );
-    setSliderAndLabel(resonanceSlider, resonanceLabel);
     
     gainSlider.setNormalisableRange (NormalisableRange<double> { -12.0f, 12.0f, 0.01f } );// , 0.0f );
     gainSlider.setTextValueSuffix (" dB");
@@ -28,18 +23,6 @@ BPFGui::~BPFGui()
 {
     
 }
-
-void BPFGui::paint (juce::Graphics& g)
-{
-    auto bounds = getLocalBounds().reduced (5);
-    
-    g.fillAll(Colours::darkred);
-    g.setColour(Colours::white);
-    g.setFont(20.0f);
-    g.drawText(componentName, bounds.removeFromBottom (30.0f).withX (5), Justification::centred);
-    g.drawRoundedRectangle(bounds.toFloat(), 1.0f, 2.0f);
-}
-
 
 void BPFGui::resized()
 {
@@ -60,23 +43,4 @@ void BPFGui::resized()
     
     gainSlider.setBounds(startX, 270, sliderWidth, sliderHeight);
     gainLabel.setBounds(gainSlider.getX(), gainSlider.getY() - labelYOffset, gainSlider.getWidth(), LabelHeight);
-}
-
-
-void BPFGui::sliderValueChanged(Slider* slider)
-{
-    
-}
-
-void BPFGui::setSliderAndLabel(Slider& slider, Label& label)
-{
-    slider.setSliderStyle(Slider::Rotary);
-    slider.setTextBoxStyle(Slider::TextBoxBelow, false, 70, 25);
-    slider.addListener(this);
-    addAndMakeVisible(slider);
-
-    label.setColour(Label::ColourIds::textColourId, Colours::blanchedalmond);
-    label.setFont(15.0f);
-    label.setJustificationType(Justification::centred);
-    addAndMakeVisible(label);
 }
