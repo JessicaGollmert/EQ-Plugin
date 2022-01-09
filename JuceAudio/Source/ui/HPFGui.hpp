@@ -10,33 +10,18 @@
 
 #include <JuceHeader.h>
 #include "../audio/HPF.hpp"
+#include "FilterBase.hpp"
 
-class HPFGui :   public Component,
-                 public Slider::Listener
+class HPFGui : public FilterGui
 {
 public:
     /** Constructor */
-    HPFGui();
+    HPFGui(String name);
     /** Destructor */
     ~HPFGui();
     
     void setHPF (HighPassFilter* hpfPtr) { hpf = hpfPtr; }
         
-    void paint (juce::Graphics&) override;
-    //Component
-    void resized() override;
-    //Slider::Listener
-    void sliderValueChanged (Slider* slider) override;
-    
-    void setSliderAndLabel(Slider& slider, Label& label);
-
-    
 private:
     HighPassFilter* hpf {nullptr};  //pointer to an hpf object
-    
-    Slider frequencySlider;
-    Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
-    
-    Slider resonanceSlider;
-    Label resonanceLabel { "Res", "Resonance" };
 };

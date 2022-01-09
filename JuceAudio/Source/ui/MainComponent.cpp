@@ -11,6 +11,8 @@
 //==============================================================================
 MainComponent::MainComponent (Audio& a)
 : audio (a)
+, highPassGui( "HPF" )
+, lowPassGui( "LPF" )
 , bandPassGui1 ( "Lows", 20.0f, 300.0f)
 , bandPassGui2 ( "Mids", 300.0f , 3000.0f)
 , bandPassGui3 ( "Highs", 3000.0f, 20000.0f)

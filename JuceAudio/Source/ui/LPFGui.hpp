@@ -10,33 +10,20 @@
 
 #include <JuceHeader.h>
 #include "../audio/LPF.hpp"
+#include "FilterBase.hpp"
 
-class LPFGui :   public Component,
-                 public Slider::Listener
+class LPFGui : public FilterGui
 {
 public:
     /** Constructor */
-    LPFGui();
+    LPFGui(String name);
     /** Destructor */
     ~LPFGui();
-    
-    void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
-        
-    void paint (juce::Graphics&) override;
-    //Component
-    void resized() override;
-    //Slider::Listener
-    void sliderValueChanged (Slider* slider) override;
-    
-    void setSliderAndLabel(Slider& slider, Label& label);
 
-    
+    void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
+
 private:
     LowPassFilter* lpf {nullptr};  //pointer to an hpf object
-    
-    Slider frequencySlider;
-    Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
-    
-    Slider resonanceSlider;
-    Label resonanceLabel { "Res", "Resonance" };
 };
+
+
