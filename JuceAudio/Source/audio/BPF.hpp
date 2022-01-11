@@ -26,4 +26,6 @@ private:
     
     IIRFilter bandPassFilter;
     
+//    std::atomic<int> filterOn {false};
+    
 };

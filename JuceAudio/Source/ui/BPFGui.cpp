@@ -28,6 +28,8 @@ void BPFGui::resized()
 {
     const auto startY = 30;
     const auto startX = 10;
+    const auto resonanceY = 150;
+    const auto gainY = 270;
     const auto sliderWidth = 100;
     const auto sliderHeight = 90;
     const auto labelYOffset = 20;
@@ -37,10 +39,10 @@ void BPFGui::resized()
     frequencyLabel.setBounds (frequencySlider.getX(), frequencySlider.getY() - labelYOffset,
                               frequencySlider.getWidth(), LabelHeight);
 
-    resonanceSlider.setBounds (startX, 150, sliderWidth, sliderHeight);
+    resonanceSlider.setBounds (startX, resonanceY, sliderWidth, sliderHeight);
     resonanceLabel.setBounds (resonanceSlider.getX(), resonanceSlider.getY() - labelYOffset,
                               resonanceSlider.getWidth(), LabelHeight);
     
-    gainSlider.setBounds(startX, 270, sliderWidth, sliderHeight);
+    gainSlider.setBounds(startX, gainY, sliderWidth, sliderHeight);
     gainLabel.setBounds(gainSlider.getX(), gainSlider.getY() - labelYOffset, gainSlider.getWidth(), LabelHeight);
 }

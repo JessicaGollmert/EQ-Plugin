@@ -27,14 +27,20 @@ public:
     bool isPlaying() const;
     
     /** Processes the audio sample by sample. */
-    float processSample (float input);
+    float processSampleL (float input);
+    
+//    float processSampleR (float input);
     
     /** Loads the specified file into the transport source */
     void load ();
+    
+    void setSamplerate (float samplerate);
     
 private:
     std::atomic<int> playState {false};
     
     unsigned int bufferPosition {0};
     AudioBuffer<float> audioBuffer;
+    
+    float currentSamplerate = 0.0f;
 };

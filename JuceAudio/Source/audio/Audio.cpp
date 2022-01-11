@@ -33,10 +33,6 @@ Audio::~Audio()
 {
     audioDeviceManager.removeAudioCallback (this);
     audioDeviceManager.removeMidiInputCallback ("", this);
-    
-    //remove the file player from the source
-//    audioSourcePlayer.setSource (nullptr);
-    
 }
 
 FilePlayback* Audio::getFilePlayer()
@@ -76,8 +72,6 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     
     while(numSamples--)
     {
-        float fileOutL = *outL;
-        float fileOutR = *outR;
         
 //        bpf.applyFilter(outL, numSamples);
 //        bpf.applyFilter(outR, numSamples);
@@ -86,8 +80,8 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
 //        hpf.applyFilter(outL, numSamples);
 //        hpf.applyFilter(outR, numSamples);
         
-        *outL = filePlayer.processSample(fileOutL);
-        *outR = filePlayer.processSample(fileOutR);
+        *outL = filePlayer.processSampleL(*outL); // mono -> needs to be stereo
+        *outR = *outL;
         
         inL++;
         outL++;
@@ -97,11 +91,11 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
 
 void Audio::audioDeviceAboutToStart (AudioIODevice* device)
 {
-//    audioSourcePlayer.audioDeviceAboutToStart (device);
     samplerate = device->getCurrentSampleRate();
+    filePlayer.setSamplerate(device->getCurrentSampleRate());
 }
 
 void Audio::audioDeviceStopped()
 {
-//    audioSourcePlayer.audioDeviceStopped();
+
 }

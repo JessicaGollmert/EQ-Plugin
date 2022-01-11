@@ -40,8 +40,10 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::resized()
 {
-    const auto paddingX = 5;
+    const auto paddingXleft = 5;
+    const auto paddingXright = paddingXleft + 770;
     const auto paddingY = 290;
+    const auto filterOffsetY = paddingY + 50;
     const auto width = 120;
     const auto halfWidth = 60;
     const auto height = 310; // small component
@@ -49,9 +51,9 @@ void MainComponent::resized()
 
 //    audioVisualiser.setBounds(0, 10, getWidth(), 270);
     
-    highPassGui.setBounds (paddingX, paddingY + 50, width, height);
+    highPassGui.setBounds (paddingXleft, filterOffsetY, width, height);
     
-    lowPassGui.setBounds(paddingX + 770, paddingY + 50, width, height);
+    lowPassGui.setBounds(paddingXright, filterOffsetY, width, height);
     
     bandPassGui1.setBounds(195, paddingY, width, largeHeight); // left
     bandPassGui2.setBounds(getWidth() / 2 - halfWidth, paddingY, width, largeHeight); // middle

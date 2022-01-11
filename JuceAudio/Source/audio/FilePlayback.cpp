@@ -10,7 +10,7 @@
 
 FilePlayback::FilePlayback()
 {
-    audioBuffer.setSize(1, 441000); // adjust to be flexible
+    audioBuffer.setSize(1, currentSamplerate);
     audioBuffer.clear();
 }
 
@@ -28,6 +28,44 @@ bool FilePlayback::isPlaying () const
 {
     return playState.load();
 }
+
+float FilePlayback::processSampleL(float input)
+{
+    auto outputL = 0.0f;
+//    float* audioSample;
+    
+    if (playState.load() == true)
+    {
+        //play
+        outputL = *audioBuffer.getWritePointer(0, bufferPosition);
+        
+        // increment and cycle buffer
+        if (++bufferPosition >= audioBuffer.getNumSamples())
+        {
+            bufferPosition = 0;
+        }
+    }
+    return outputL;
+}
+
+//float FilePlayback::processSampleR(float input)
+//{
+//        auto outputR = 0.0f;
+//    //    float* audioSample;
+//
+//        if (playState.load() == true)
+//        {
+//            //play
+//            outputR = *audioBuffer.getWritePointer(1, bufferPosition);
+//
+//            // increment and cycle buffer
+//            if (++bufferPosition >= audioBuffer.getNumSamples())
+//            {
+//                bufferPosition = 0;
+//            }
+//        }
+//        return outputR;
+//}
 
 void FilePlayback::load ()
 {
@@ -51,27 +89,9 @@ void FilePlayback::load ()
     }
 }
 
-float FilePlayback::processSample(float input)
+void FilePlayback::setSamplerate(float samplerate)
 {
-    auto output = 0.0f;
-//    float* audioSample;
-    
-    if (playState.load() == true)
-    {
-        //play
-        output = *audioBuffer.getWritePointer(0, bufferPosition);
-        
-        //click 8 times each bufferLength
-        if ((bufferPosition % (441000 / 8)) == 0)
-            output += 0.1f;
-        
-        // increment and cycle buffer
-        if (++bufferPosition >= 441000)
-        {
-            bufferPosition = 0;
-        }
-    }
-    return output;
+    currentSamplerate = samplerate;
 }
 
 //void FilePlayback::setPosition(double newPosition)
