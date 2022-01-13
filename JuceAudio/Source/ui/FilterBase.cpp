@@ -53,12 +53,6 @@ void FilterGui::resized()
     bandOnOffButton.setBounds(bounds.getRight() - 63, bounds.getBottom() - 32, 60, 30);
 }
 
-
-void FilterGui::sliderValueChanged(Slider* slider)
-{
-    
-}
-
 void FilterGui::setSliderAndLabel(Slider& slider, Label& label)
 {
     slider.setSliderStyle(Slider::Rotary);
@@ -86,4 +80,9 @@ void FilterGui::buttonClicked(Button *button)
         bandOnOffButton.setButtonText( "OFF" );
         bandOnOffButton.setColour (TextButton::buttonColourId, Colours::darkgrey);
     }
+}
+
+    void FilterGui::sliderValueChanged (Slider* slider)
+{
+    
 }

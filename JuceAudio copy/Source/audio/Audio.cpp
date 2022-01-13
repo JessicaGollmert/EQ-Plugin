@@ -12,6 +12,8 @@
 
 Audio::Audio()
 {
+//    audioSourcePlayer.setSource (&filePlayer);
+    
     auto midiInputDevices = MidiInput::getAvailableDevices();
     if (midiInputDevices.size() > 0)
         audioDeviceManager.setMidiInputDeviceEnabled (midiInputDevices[0].identifier, true);
@@ -22,7 +24,7 @@ Audio::Audio()
         DBG (errorMessage);
     audioDeviceManager.addAudioCallback (this);
     
-    hpf.setCoefficients ( IIRCoefficients::makeLowPass (samplerate, 100.0f, 0.5f ) );
+//    hpf.setCoefficients ( IIRCoefficients::makeLowPass (samplerate, 100.0f, 0.5f ) );
     
 //    bpf.setFilter(samplerate, 1000.0f, 0.1f);
 //    lpf.setFilter(samplerate, 20000.0f, 0.1f);
@@ -101,8 +103,8 @@ void Audio::audioDeviceStopped()
 
 }
 
-//void Audio::updateFilters(float frequency, float q)
-//{
-//    hpf.setCoefficients ( IIRCoefficients::makeLowPass (samplerate, frequency, q ) );
-//    std::cout << frequency << "\n" << q << "\n";
-//}
+void Audio::updateFilters(float frequency, float q)
+{
+    hpf.setCoefficients ( IIRCoefficients::makeLowPass (samplerate, frequency, q ) );
+    std::cout << frequency << "\n" << q << "\n";
+}

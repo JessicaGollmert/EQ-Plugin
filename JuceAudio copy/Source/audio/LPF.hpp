@@ -1,8 +1,8 @@
 //
-//  HPF.hpp
+//  LPF.hpp
 //  JuceAudio - App
 //
-//  Created by Jessica Gollmert on 08/12/2021.
+//  Created by Jessica Gollmert on 11/12/2021.
 //  Copyright © 2021 UWE. All rights reserved.
 //
 
@@ -10,21 +10,20 @@
 
 #include <JuceHeader.h>
 
-class HighPassFilter
+class LowPassFilter
 {
     
 public:
-    HighPassFilter();
+    LowPassFilter();
     
-    ~HighPassFilter();
+    ~LowPassFilter();
     
     
     void setFilter ( float sampleRate, float frequency, float Q );
-
+    
     void applyFilter (float* samples, int numSamples);
     
 private:
     
-    IIRFilter highPassFilter;
-    
+    IIRFilter lowPassFilter;
 };

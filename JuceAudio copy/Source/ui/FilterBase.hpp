@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <JuceHeader.h>
+#include "../audio/Audio.h"
 
 /** Class for a sinewave oscillator with gain controls. Call nextSample() repetedly to stream audio samples from the oscilator. */
 
@@ -19,7 +20,7 @@ class FilterGui : public Component,
 {
 public:
     /** Filter constructor */
-    FilterGui();
+    FilterGui(Audio& a);
     
     /** Filter destructor */
     virtual ~FilterGui() = default;
@@ -35,7 +36,8 @@ public:
     void buttonClicked (Button* button) override;
     
 protected:
-
+    Audio& audio;
+    
     Slider frequencySlider;
     Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
     
