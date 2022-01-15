@@ -23,7 +23,7 @@ void BandPassFilter::setFilter(float sampleRate, float frequency, float Q)
     bandPassFilter.setCoefficients(IIRCoefficients::makeBandPass (sampleRate, frequency, Q));
 }
 
-void BandPassFilter::applyFilter(float *samples, int numSamples)
+float BandPassFilter::applyFilter(float sample)
 {
-    bandPassFilter.processSamples(samples, numSamples);
+    return bandPassFilter.processSingleSampleRaw( sample );
 }

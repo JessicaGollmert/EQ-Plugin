@@ -12,6 +12,8 @@
 
 Audio::Audio()
 {
+//    audioSourcePlayer.setSource (&filePlayer);
+    
     auto midiInputDevices = MidiInput::getAvailableDevices();
     if (midiInputDevices.size() > 0)
         audioDeviceManager.setMidiInputDeviceEnabled (midiInputDevices[0].identifier, true);
@@ -22,11 +24,6 @@ Audio::Audio()
         DBG (errorMessage);
     audioDeviceManager.addAudioCallback (this);
     
-    hpf.setCoefficients ( IIRCoefficients::makeLowPass (samplerate, 100.0f, 0.5f ) );
-    
-//    bpf.setFilter(samplerate, 1000.0f, 0.1f);
-//    lpf.setFilter(samplerate, 20000.0f, 0.1f);
-//    hpf.setFilter(samplerate, 100.0f, 0.5f);
 }
 
 Audio::~Audio()
@@ -72,16 +69,14 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     
     while(numSamples--)
     {
-        
-//        bpf.applyFilter(outL, numSamples);
-
-//        lpf.applyFilter(outL, numSamples);
-
-//        hpf.applyFilter(outL, numSamples);
-//        hpf.applyFilter(filePlayer.audioBuffer.getWritePointer(0), filePlayer.audioBuffer.getNumSamples()); // crashes
-        
-        
         *outL = filePlayer.processSampleL(*outL); // mono -> needs to be stereo
+
+//        *outL = hpf.applyFilter(*outL);
+//        *outL = bpf.applyFilter(*outL);
+//        *outL = lpf.applyFilter(*outL);
+        
+        *outL = hpf.applyFilter(bpf.applyFilter(lpf.applyFilter(*outL)));
+        
         *outR = *outL;
         
         inL++;
@@ -93,16 +88,13 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
 void Audio::audioDeviceAboutToStart (AudioIODevice* device)
 {
     samplerate = device->getCurrentSampleRate();
-    filePlayer.setSamplerate(device->getCurrentSampleRate());
+    filePlayer.setSamplerate (samplerate);
+    bpf.setFilter(samplerate, 1000.0f, 0.1f);
+    lpf.setFilter(samplerate, 20000.0f, 0.1f);
+    hpf.setFilter(samplerate, 100.0f, 0.5f);
 }
 
 void Audio::audioDeviceStopped()
 {
 
 }
-
-//void Audio::updateFilters(float frequency, float q)
-//{
-//    hpf.setCoefficients ( IIRCoefficients::makeLowPass (samplerate, frequency, q ) );
-//    std::cout << frequency << "\n" << q << "\n";
-//}

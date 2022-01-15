@@ -1,10 +1,16 @@
-
+//
+//  HPF.cpp
+//  JuceAudio - App
+//
+//  Created by Jessica Gollmert on 08/12/2021.
+//  Copyright © 2021 UWE. All rights reserved.
+//
 
 #include "HPF.hpp"
 
 HighPassFilter::HighPassFilter()
 {
-
+    
 }
 
 HighPassFilter::~HighPassFilter()
@@ -14,11 +20,10 @@ HighPassFilter::~HighPassFilter()
 
 void HighPassFilter::setFilter( float sampleRate, float frequency, float Q )
 {
-    highPassFilter.setCoefficients ( IIRCoefficients::makeLowPass (sampleRate, frequency, Q ) );
+    highPassFilter.setCoefficients ( IIRCoefficients::makeHighPass (sampleRate, frequency, Q ) );
 }
 
-void HighPassFilter::applyFilter(float *samples, int numSamples)
+float HighPassFilter::applyFilter(float sample)
 {
-    highPassFilter.processSamples ( samples, numSamples );
+    return highPassFilter.processSingleSampleRaw (sample);
 }
-

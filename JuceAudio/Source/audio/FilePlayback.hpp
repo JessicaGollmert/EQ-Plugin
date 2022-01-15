@@ -36,12 +36,12 @@ public:
     
     void setSamplerate (float samplerate);
     
-    AudioBuffer<float> audioBuffer;
-    
     unsigned int bufferPosition {0};
     
 private:
     std::atomic<int> playState {false};
-
+    
+    AudioBuffer<float> audioBuffer;
+    
     float currentSamplerate = 0.0f;
 };

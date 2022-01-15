@@ -20,8 +20,8 @@ public:
     
     
     void setFilter ( float sampleRate, float frequency, float Q );
-
-    void applyFilter (float* samples, int numSamples);
+    
+    float applyFilter (float samples);
     
 private:
     

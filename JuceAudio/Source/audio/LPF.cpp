@@ -23,7 +23,7 @@ void LowPassFilter::setFilter( float sampleRate, float frequency, float Q )
     lowPassFilter.setCoefficients ( IIRCoefficients::makeLowPass (sampleRate, frequency, Q ) );
 }
 
-void LowPassFilter::applyFilter(float *samples, int numSamples)
+float LowPassFilter::applyFilter(float sample)
 {
-    lowPassFilter.processSamples ( samples, numSamples );
+    return lowPassFilter.processSingleSampleRaw ( sample );
 }
