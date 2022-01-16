@@ -21,9 +21,11 @@ public:
     ~LPFGui();
 
     void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
-
+    
+    void sliderValueChanged (Slider* slider) override;
+    
 private:
-    LowPassFilter* lpf {nullptr};  //pointer to an hpf object
+    LowPassFilter* lpf {nullptr};  // pointer to an hpf object
 };
 
 

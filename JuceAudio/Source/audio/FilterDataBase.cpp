@@ -6,4 +6,14 @@
 //  Copyright © 2022 UWE. All rights reserved.
 //
 
-#include "FilterDataBase.hpp"
+//#include "FilterDataBase.hpp"
+//
+//FilterData::FilterData ()
+//{
+//    
+//}
+//
+//float FilterData::applyFilter(float sample)
+//{
+//    return filter.processSingleSampleRaw ( sample );
+//}

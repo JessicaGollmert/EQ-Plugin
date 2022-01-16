@@ -6,19 +6,20 @@
 //  Copyright © 2022 UWE. All rights reserved.
 //
 
-#pragma once
-
-class FilterData
-{
-public:
-    /** Filter constructor */
-    FilterData();
-    
-    /** Filter destructor */
-    virtual ~FilterData() = default;
-    
-
-    
-protected:
-
-};
+//#pragma once
+//#include <JuceHeader.h>
+//
+//class FilterData
+//{
+//public:
+//    /** Filter constructor */
+//    FilterData();
+//
+//    /** Filter destructor */
+//    virtual ~FilterData() = default;
+//
+//    float applyFilter (float samples);
+//
+//protected:
+//    IIRFilter filter;
+//};

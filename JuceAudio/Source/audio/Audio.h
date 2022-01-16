@@ -44,11 +44,12 @@ public:
     void audioDeviceAboutToStart (AudioIODevice* device) override;
     void audioDeviceStopped() override;
     
+    void setFilterFreqAndQ (float frequency, float q);
+    
     float samplerate = 0.0f;
     
 private:
     AudioDeviceManager audioDeviceManager;
-//    AudioSourcePlayer audioSourcePlayer;
     FilePlayback filePlayer;
     BandPassFilter bpf;
     LowPassFilter lpf;

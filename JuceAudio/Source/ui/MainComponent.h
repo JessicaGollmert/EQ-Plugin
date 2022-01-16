@@ -14,6 +14,7 @@
 #include "LPFGui.hpp"
 #include "BPFGui.hpp"
 #include "PlaybackGui.hpp"
+#include "FilterBase.hpp"
 #include "AudioVisualiser.hpp"
 
 //==============================================================================
@@ -54,9 +55,9 @@ public:
     PopupMenu getMenuForIndex (int topLevelMenuIndex, const String& menuName) override;
     void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
     
+    
 private:
     Audio& audio;
-    
     HPFGui highPassGui;
     LPFGui lowPassGui;
     BPFGui bandPassGui1;

@@ -13,8 +13,8 @@ FilterGui::FilterGui()
     frequencySlider.setTextValueSuffix (" Hz");
     setSliderAndLabel(frequencySlider, frequencyLabel);
     
-    resonanceSlider.setNormalisableRange(NormalisableRange<double> { 1.0f, 10.0f, 0.01f } );
-    setSliderAndLabel(resonanceSlider, resonanceLabel);
+    qSlider.setNormalisableRange(NormalisableRange<double> { 1.0f, 10.0f, 0.01f } );
+    setSliderAndLabel(qSlider, qLabel);
     
     bandOnOffButton.addListener (this);
     bandOnOffButton.setColour (TextButton::buttonColourId, Colours::darkgrey);
@@ -47,8 +47,8 @@ void FilterGui::resized()
     frequencySlider.setBounds(startX, startY, sliderWidth, sliderHeight);
     frequencyLabel.setBounds (frequencySlider.getX(), frequencySlider.getY() - labelYOffset, frequencySlider.getWidth(), LabelHeight);
     
-    resonanceSlider.setBounds (startX, resonanceY, sliderWidth, sliderHeight);
-    resonanceLabel.setBounds (resonanceSlider.getX(), resonanceSlider.getY() - labelYOffset, resonanceSlider.getWidth(), LabelHeight);
+    qSlider.setBounds (startX, resonanceY, sliderWidth, sliderHeight);
+    qLabel.setBounds (qSlider.getX(), qSlider.getY() - labelYOffset, qSlider.getWidth(), LabelHeight);
     
     bandOnOffButton.setBounds(bounds.getRight() - 63, bounds.getBottom() - 32, 60, 30);
 }
@@ -82,7 +82,7 @@ void FilterGui::buttonClicked(Button *button)
     }
 }
 
-    void FilterGui::sliderValueChanged (Slider* slider)
+void FilterGui::sliderValueChanged (Slider* slider)
 {
-    
+
 }

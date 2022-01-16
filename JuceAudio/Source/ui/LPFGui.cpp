@@ -19,3 +19,12 @@ LPFGui::~LPFGui()
 {
     
 }
+
+void LPFGui::sliderValueChanged(Slider *slider)
+{
+    if (this->lpf != nullptr)
+    {
+        this->lpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
+    }
+}
+

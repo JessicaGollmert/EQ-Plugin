@@ -34,13 +34,15 @@ public:
     
     void buttonClicked (Button* button) override;
     
+    //Slider getFreqSlider() {return frequencySlider;}
+    
 protected:
 
     Slider frequencySlider;
     Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
     
-    Slider resonanceSlider;
-    Label resonanceLabel { "Res", "Resonance" };
+    Slider qSlider;
+    Label qLabel { "Res", "Resonance" };
     
     String componentName = "";
     

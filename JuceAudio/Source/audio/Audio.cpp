@@ -12,8 +12,6 @@
 
 Audio::Audio()
 {
-//    audioSourcePlayer.setSource (&filePlayer);
-    
     auto midiInputDevices = MidiInput::getAvailableDevices();
     if (midiInputDevices.size() > 0)
         audioDeviceManager.setMidiInputDeviceEnabled (midiInputDevices[0].identifier, true);
@@ -90,11 +88,18 @@ void Audio::audioDeviceAboutToStart (AudioIODevice* device)
     samplerate = device->getCurrentSampleRate();
     filePlayer.setSamplerate (samplerate);
     bpf.setFilter(samplerate, 1000.0f, 0.1f);
-    lpf.setFilter(samplerate, 20000.0f, 0.1f);
+    lpf.setFilter(samplerate, 2000.0f, 0.5f);
     hpf.setFilter(samplerate, 100.0f, 0.5f);
 }
 
 void Audio::audioDeviceStopped()
 {
 
+}
+
+void Audio::setFilterFreqAndQ(float freqeuncy, float q)
+{
+//    bpf.setFilter(samplerate, freqeuncy, q);
+//    lpf.setFilter(samplerate, freqeuncy, q);
+//    hpf.setFilter(samplerate, freqeuncy, q);
 }
