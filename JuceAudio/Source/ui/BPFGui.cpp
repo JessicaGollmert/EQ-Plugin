@@ -71,7 +71,7 @@ void BPFGui::resized()
 
 void BPFGui::sliderValueChanged(Slider* slider)
 {
-
+//        convertFreqToX(frequencySlider.getValue(), frequencySlider.getMaximum(), frequencySlider.getMinimum(), xMax, xMin);
 }
 
 void BPFGui::setSliderAndLabel(Slider& slider, Label& label)
@@ -101,4 +101,23 @@ void BPFGui::buttonClicked(Button *button)
         bandOnOffButton.setButtonText( "OFF" );
         bandOnOffButton.setColour (TextButton::buttonColourId, Colours::darkgrey);
     }
+}
+
+float BPFGui::convertFreqToX(float oldValue, float oldMax, float oldMin, float newMax, float newMin)
+{
+    float oldRange = (oldMax - oldMin);
+    float newRange = (newMax - newMin);
+    float newValue = (((oldValue - oldMin) * newRange) / oldRange) + newMin;
+    
+    if (oldMin != oldMax && newMin != newMax)
+    {
+        DBG(newValue);
+        return newValue = (((oldValue - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
+    }
+    else
+    {
+        DBG(newValue);
+        return newValue = (newMax + newMin) / 2;
+    }
+    
 }

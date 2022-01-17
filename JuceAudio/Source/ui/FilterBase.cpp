@@ -84,5 +84,14 @@ void FilterGui::buttonClicked(Button *button)
 
 void FilterGui::sliderValueChanged (Slider* slider)
 {
+    convertFreqToX();
+}
 
+float FilterGui::convertFreqToX()
+{
+    x = frequencySlider.getValue();
+    
+    return x;
+    
+    DBG(x);
 }

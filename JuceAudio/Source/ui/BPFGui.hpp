@@ -34,10 +34,13 @@ public:
     
     void buttonClicked (Button* button) override;
     
+    float convertFreqToX(float oldValue, float oldMax, float oldMin, float newMax, float newMin);
+    
+    Slider frequencySlider;
+    
 private:
     BandPassFilter* bpf {nullptr};  //pointer to an hpf object
     
-    Slider frequencySlider;
     Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
     
     Slider resonanceSlider;

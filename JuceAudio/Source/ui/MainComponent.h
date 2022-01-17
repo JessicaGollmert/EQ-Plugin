@@ -23,7 +23,8 @@
     your controls and content.
 */
 class MainComponent   : public Component,
-                        public MenuBarModel
+                        public MenuBarModel,
+                        public Slider::Listener
 {
 public:
     //==============================================================================
@@ -55,6 +56,7 @@ public:
     PopupMenu getMenuForIndex (int topLevelMenuIndex, const String& menuName) override;
     void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
     
+    void sliderValueChanged (Slider* slider) override;
     
 private:
     Audio& audio;
@@ -65,6 +67,8 @@ private:
     BPFGui bandPassGui3;
     PlaybackGui playbackGui;
 //    AudioVisualiser audioVisualiser;
+    
+    TextEditor hertzValues [5];
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
