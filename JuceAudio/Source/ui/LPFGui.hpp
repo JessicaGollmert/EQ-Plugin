@@ -20,6 +20,7 @@ public:
     /** Destructor */
     ~LPFGui();
 
+    /** sets the lpf that this gui controls */
     void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
     
     void sliderValueChanged (Slider* slider) override;
@@ -27,5 +28,3 @@ public:
 private:
     LowPassFilter* lpf {nullptr};  // pointer to an hpf object
 };
-
-

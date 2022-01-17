@@ -36,17 +36,20 @@ public:
     
     float convertFreqToX(float oldValue, float oldMax, float oldMin, float newMax, float newMin);
     
+    float convertGaintoY(float oldValueY, float oldMaxY, float oldMinY, float newMaxY, float newMinY);
+    
     Slider frequencySlider;
+    
+    Slider gainSlider;
     
 private:
     BandPassFilter* bpf {nullptr};  //pointer to an hpf object
     
     Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
     
-    Slider resonanceSlider;
-    Label resonanceLabel { "Res", "Resonance" };
+    Slider qSlider;
+    Label qLabel { "q", "Q" };
     
-    Slider gainSlider;
     Label gainLabel { "Gain", "Gain" };
     
     String componentName = "";

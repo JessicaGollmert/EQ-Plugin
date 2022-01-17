@@ -84,14 +84,24 @@ void FilterGui::buttonClicked(Button *button)
 
 void FilterGui::sliderValueChanged (Slider* slider)
 {
-    convertFreqToX();
+
 }
 
-float FilterGui::convertFreqToX()
+float FilterGui::convertFreqToX(float oldValue, float oldMax, float oldMin, float newMax, float newMin)
 {
-    x = frequencySlider.getValue();
+    float oldRange = (oldMax - oldMin);
+    float newRange = (newMax - newMin);
+    float newValue = (((oldValue - oldMin) * newRange) / oldRange) + newMin;
     
-    return x;
+    if (oldMin != oldMax && newMin != newMax)
+    {
+        DBG(newValue);
+        return newValue = (((oldValue - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
+    }
+    else
+    {
+        DBG(newValue);
+        return newValue = (newMax + newMin) / 2;
+    }
     
-    DBG(x);
 }

@@ -26,5 +26,9 @@ void LPFGui::sliderValueChanged(Slider *slider)
     {
         this->lpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
     }
+    else
+    {
+        DBG("Pointer still null!");
+    }
 }
 

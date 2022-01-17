@@ -34,11 +34,13 @@ public:
     
     void buttonClicked (Button* button) override;
     
-    float convertFreqToX();
+    float convertFreqToX(float oldValue, float oldMax, float oldMin, float newMax, float newMin);
     
     Slider frequencySlider;
     
     Slider qSlider;
+    
+    bool buttonOn = false;
     
 protected:
 
@@ -46,10 +48,10 @@ protected:
 
     Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
     
-    Label qLabel { "Res", "Resonance" };
+    Label qLabel { "q", "Q" };
     
     String componentName = "";
     
     TextButton bandOnOffButton { "OFF" };
-    bool buttonOn = false;
+
 };

@@ -21,6 +21,8 @@ public:
     ~HPFGui();
     
     void setHPF (HighPassFilter* hpfPtr) { hpf = hpfPtr; }
+    
+    void sliderValueChanged (Slider* slider) override;
         
 private:
     HighPassFilter* hpf {nullptr};  //pointer to an hpf object

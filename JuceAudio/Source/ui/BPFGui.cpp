@@ -16,8 +16,8 @@ BPFGui::BPFGui(String name, float minFreq, float maxFreq)
     frequencySlider.setTextValueSuffix (" Hz");
     setSliderAndLabel(frequencySlider, frequencyLabel);
     
-    resonanceSlider.setNormalisableRange(NormalisableRange<double> { 1.0f, 10.0f, 0.01f } );
-    setSliderAndLabel(resonanceSlider, resonanceLabel);
+    qSlider.setNormalisableRange(NormalisableRange<double> { 1.0f, 10.0f, 0.01f } );
+    setSliderAndLabel(qSlider, qLabel);
     
     gainSlider.setNormalisableRange (NormalisableRange<double> { -12.0f, 12.0f, 0.01f } );// , 0.0f );
     gainSlider.setTextValueSuffix (" dB");
@@ -48,7 +48,7 @@ void BPFGui::resized()
 {
     const auto startY = 30;
     const auto startX = 10;
-    const auto resonanceY = 150;
+    const auto qY = 150;
     const auto gainY = 270;
     const auto sliderWidth = 100;
     const auto sliderHeight = 90;
@@ -59,9 +59,9 @@ void BPFGui::resized()
     frequencyLabel.setBounds (frequencySlider.getX(), frequencySlider.getY() - labelYOffset,
                               frequencySlider.getWidth(), LabelHeight);
 
-    resonanceSlider.setBounds (startX, resonanceY, sliderWidth, sliderHeight);
-    resonanceLabel.setBounds (resonanceSlider.getX(), resonanceSlider.getY() - labelYOffset,
-                              resonanceSlider.getWidth(), LabelHeight);
+    qSlider.setBounds (startX, qY, sliderWidth, sliderHeight);
+    qLabel.setBounds (qSlider.getX(), qSlider.getY() - labelYOffset,
+                              qSlider.getWidth(), LabelHeight);
 
     gainSlider.setBounds(startX, gainY, sliderWidth, sliderHeight);
     gainLabel.setBounds(gainSlider.getX(), gainSlider.getY() - labelYOffset, gainSlider.getWidth(), LabelHeight);
@@ -71,7 +71,14 @@ void BPFGui::resized()
 
 void BPFGui::sliderValueChanged(Slider* slider)
 {
-//        convertFreqToX(frequencySlider.getValue(), frequencySlider.getMaximum(), frequencySlider.getMinimum(), xMax, xMin);
+    if (this->bpf != nullptr)
+    {
+        this->bpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
+    }
+    else
+    {
+        DBG("Pointer still null!");
+    }
 }
 
 void BPFGui::setSliderAndLabel(Slider& slider, Label& label)
@@ -111,13 +118,28 @@ float BPFGui::convertFreqToX(float oldValue, float oldMax, float oldMin, float n
     
     if (oldMin != oldMax && newMin != newMax)
     {
-        DBG(newValue);
         return newValue = (((oldValue - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
     }
     else
     {
-        DBG(newValue);
         return newValue = (newMax + newMin) / 2;
+    }
+    
+}
+
+float BPFGui::convertGaintoY(float oldValueY, float oldMaxY, float oldMinY, float newMaxY, float newMinY)
+{
+    float oldRange = (oldMaxY - oldMinY);
+    float newRange = (newMaxY - newMinY);
+    float newValue = (((oldValueY - oldMinY) * newRange) / oldRange) + newMinY;
+    
+    if (oldMinY != oldMaxY && newMinY != newMaxY)
+    {
+        return newValue = (((oldValueY - oldMinY) * (newMaxY - newMinY)) / (oldMaxY - oldMinY)) + newMinY;
+    }
+    else
+    {
+        return newValue = (newMaxY + newMinY) / 2;
     }
     
 }

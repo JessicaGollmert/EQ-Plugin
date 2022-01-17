@@ -83,24 +83,7 @@ void MainComponent::resized()
 
 void MainComponent::paint (Graphics& g)
 {
-    float x1 = bandPassGui1.convertFreqToX(bandPassGui1.frequencySlider.getValue(),
-                                                  bandPassGui1.frequencySlider.getMaximum(),
-                                                  bandPassGui1.frequencySlider.getMinimum(),
-                                                  323.0f,
-                                                  2.0f);
-    
-    float x2 = bandPassGui2.convertFreqToX(bandPassGui2.frequencySlider.getValue(),
-                                                  bandPassGui1.frequencySlider.getMaximum(),
-                                                  bandPassGui1.frequencySlider.getMinimum(),
-                                                  334.5f,
-                                                  300.0f);
-    
-    float x3 = bandPassGui3.convertFreqToX(bandPassGui3.frequencySlider.getValue(),
-                                                  bandPassGui1.frequencySlider.getMaximum(),
-                                                  bandPassGui1.frequencySlider.getMinimum(),
-                                                  365.5f,
-                                                  334.5f);
-    
+    setValues();
     
     g.fillAll (Colours::black);
     g.setColour(Colours::lightblue);
@@ -116,9 +99,9 @@ void MainComponent::paint (Graphics& g)
     g.fillRect(getWidth() - 10, 10, 1, 240); //20000Hz
     
     g.setColour(Colours::grey);
-    g.fillEllipse(x1, 270 / 2, 20, 20); // Lows 20 - 300
-    g.fillEllipse(x2, 270 / 2, 20, 20); // Mids 300 - 3000
-    g.fillEllipse(x3, 270 / 2, 20, 20); // High 3000 - 20000
+    g.fillEllipse(xValues[0], yValues[0], 20, 20); // Lows 20 - 300
+    g.fillEllipse(xValues[1], yValues[1], 20, 20); // Mids 300 - 3000
+    g.fillEllipse(xValues[2], yValues[2], 20, 20); // High 3000 - 20000
     
     repaint();
 }
@@ -160,23 +143,41 @@ void MainComponent::menuItemSelected (int menuItemID, int topLevelMenuIndex)
     }
 }
 
-void MainComponent::sliderValueChanged (Slider* slider)
+void MainComponent::setValues()
 {
-//    if (slider == &bandPassGui1.frequencySlider)
-//    {
-//        bandPassGui1.xMax = 300;
-//        bandPassGui1.xMin = 10;
-//        bandPassGui1.x1 = bandPassGui1.convertFreqToX(bandPassGui1.frequencySlider.getValue(), bandPassGui1.frequencySlider.getMaximum(), bandPassGui1.frequencySlider.getMinimum(), 300.0f, 10.0f);
-//    }
-//    else if (slider == &bandPassGui2.frequencySlider)
-//    {
-//        bandPassGui2.xMax = 650;
-//        bandPassGui2.xMin = 300;
-//    }
-//    else if (slider == &bandPassGui3.frequencySlider)
-//    {
-//        bandPassGui3.xMax = 890;
-//        bandPassGui3.xMin = 650;
-//    }
+    xValues[0] = bandPassGui1.convertFreqToX(bandPassGui1.frequencySlider.getValue(),
+                                           bandPassGui1.frequencySlider.getMaximum(),
+                                           bandPassGui1.frequencySlider.getMinimum(),
+                                           323.0f,
+                                           2.0f);
+    
+    xValues[1] = bandPassGui2.convertFreqToX(bandPassGui2.frequencySlider.getValue(),
+                                           bandPassGui1.frequencySlider.getMaximum(),
+                                           bandPassGui1.frequencySlider.getMinimum(),
+                                           334.5f,
+                                           300.0f);
+    
+    xValues[2] = bandPassGui3.convertFreqToX(bandPassGui3.frequencySlider.getValue(),
+                                           bandPassGui1.frequencySlider.getMaximum(),
+                                           bandPassGui1.frequencySlider.getMinimum(),
+                                           624.0f,
+                                           620.5f);
+    
+    yValues[0] = bandPassGui1.convertGaintoY(bandPassGui1.gainSlider.getValue(),
+                                          bandPassGui1.gainSlider.getMaximum(),
+                                          bandPassGui1.gainSlider.getMinimum(),
+                                          269.0f,
+                                          1.0f);
 
+    yValues[1] = bandPassGui2.convertGaintoY(bandPassGui2.gainSlider.getValue(),
+                                          bandPassGui2.gainSlider.getMaximum(),
+                                          bandPassGui2.gainSlider.getMinimum(),
+                                          270.0f,
+                                          0.0f);
+
+    yValues[2] = bandPassGui3.convertGaintoY(bandPassGui3.gainSlider.getValue(),
+                                          bandPassGui3.gainSlider.getMaximum(),
+                                          bandPassGui3.gainSlider.getMinimum(),
+                                          270.0f,
+                                          0.0f);
 }

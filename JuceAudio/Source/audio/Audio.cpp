@@ -71,9 +71,13 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
 
 //        *outL = hpf.applyFilter(*outL);
 //        *outL = bpf.applyFilter(*outL);
-//        *outL = lpf.applyFilter(*outL);
+//        if(filterGui->buttonOn == true)
+//        {
+            *outL = lpf.applyFilter(*outL);
+//        }
+
         
-        *outL = hpf.applyFilter(bpf.applyFilter(lpf.applyFilter(*outL)));
+//        *outL = hpf.applyFilter(bpf.applyFilter(lpf.applyFilter(*outL)));
         
         *outR = *outL;
         
