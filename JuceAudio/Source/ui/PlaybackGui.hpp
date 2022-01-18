@@ -26,10 +26,10 @@ public:
     /** sets the file player that this gui controls */
     void setFilePlayer (FilePlayback* fp);
     
-    //Component
+    /** juce::Component function */
     void resized() override;
     
-    //Button Listener
+    /** juce::Button::Listener function */
     void buttonClicked (Button* button) override;
 
 private:
@@ -37,6 +37,7 @@ private:
     TextButton playButton   { "Play" };
     TextButton loadButton  { "Load" };
     
+    /** pointer to a filePlayer object */
     FilePlayback* filePlayer  { nullptr };
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PlaybackGui)

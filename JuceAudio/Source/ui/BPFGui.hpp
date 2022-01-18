@@ -12,6 +12,8 @@
 #include "../audio/BPF.hpp"
 #include "FilterBase.hpp"
 
+/** Class for the Band-Pass Filter UI component. Does not use the FilterGui base class */
+
 class BPFGui :   public Component,
                  public Slider::Listener,
                  public Button::Listener
@@ -19,33 +21,53 @@ class BPFGui :   public Component,
 public:
     /** Constructor */
     BPFGui(String name, float minFreq, float maxFreq);
+    
     /** Destructor */
     ~BPFGui();
     
+    /** sets the bpf that this gui controls */
     void setBPF (BandPassFilter* bpfPtr) { bpf = bpfPtr; }
     
+    /** juce::Component function */
     void paint (juce::Graphics&) override;
     
+    /** juce::Component function */
     void resized () override;
     
+    /** juce::Slider::Listener function */
     void sliderValueChanged (Slider* slider) override;
     
-    void setSliderAndLabel(Slider& slider, Label& label);
-    
+    /** juce::Button::Listener function */
     void buttonClicked (Button* button) override;
     
+    /** sets slider style and font of a slider and attached label
+     @param slider
+     @param label attached to slider */
+    void setSliderAndLabel(Slider& slider, Label& label);
+
+    /** converts slider value, in this case frequency, to a corresponding x value
+     @param oldValue current slider value
+     @param oldMax slider maximum value
+     @param oldMin slider minimum value
+     @param newMax new maximum of range to convert to
+     @param newMin new minimum of range to convert to*/
     float convertFreqToX(float oldValue, float oldMax, float oldMin, float newMax, float newMin);
     
+    /** converts slider value, in this case Q, to a corresponding y value
+     @see convertFreqToX()*/
     float convertGaintoY(float oldValueY, float oldMaxY, float oldMinY, float newMaxY, float newMinY);
     
+    /** Sliders public to be accessed by MainComponent */
     Slider frequencySlider;
     
+    /** Sliders public to be accessed by MainComponent */
     Slider gainSlider;
     
 private:
-    BandPassFilter* bpf {nullptr};  //pointer to an hpf object
+    /** pointer to an bpf object */
+    BandPassFilter* bpf {nullptr};
     
-    Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
+    Label frequencyLabel { "Freq", "Frequency" };
     
     Slider qSlider;
     Label qLabel { "q", "Q" };

@@ -12,6 +12,8 @@
 #include "../audio/LPF.hpp"
 #include "FilterBase.hpp"
 
+/** Class for the Low-Pass Filter UI component. Uses the FilterGui base class */
+
 class LPFGui : public FilterGui
 {
 public:
@@ -23,8 +25,10 @@ public:
     /** sets the lpf that this gui controls */
     void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
     
+    /** callback to slider movement */
     void sliderValueChanged (Slider* slider) override;
     
 private:
-    LowPassFilter* lpf {nullptr};  // pointer to an hpf object
+    /** pointer to an lpf object */
+    LowPassFilter* lpf {nullptr};
 };

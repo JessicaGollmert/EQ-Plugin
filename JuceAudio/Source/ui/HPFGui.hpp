@@ -12,6 +12,8 @@
 #include "../audio/HPF.hpp"
 #include "FilterBase.hpp"
 
+/** Class for the High-Pass Filter UI component. Uses the FilterGui base class */
+
 class HPFGui : public FilterGui
 {
 public:
@@ -20,10 +22,13 @@ public:
     /** Destructor */
     ~HPFGui();
     
+    /** sets the hpf that this gui controls */
     void setHPF (HighPassFilter* hpfPtr) { hpf = hpfPtr; }
     
+    /** callback to slider movement */
     void sliderValueChanged (Slider* slider) override;
         
 private:
-    HighPassFilter* hpf {nullptr};  //pointer to an hpf object
+    /** pointer to an hpf object */
+    HighPassFilter* hpf {nullptr};
 };
