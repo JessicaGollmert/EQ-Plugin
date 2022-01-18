@@ -9,8 +9,9 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../audio/LPF.hpp"
+//#include "../audio/LPF.hpp"
 #include "FilterBase.hpp"
+#include "../audio/Audio.h"
 
 /** Class for the Low-Pass Filter UI component. Uses the FilterGui base class */
 
@@ -23,12 +24,14 @@ public:
     ~LPFGui();
 
     /** sets the lpf that this gui controls */
-    void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
+//    void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
+    void setAudio(Audio* aPtr) { audio = aPtr; }
     
     /** callback to slider movement */
     void sliderValueChanged (Slider* slider) override;
     
 private:
     /** pointer to an lpf object */
-    LowPassFilter* lpf {nullptr};
+//    LowPassFilter* lpf {nullptr};
+    Audio* audio {nullptr};
 };

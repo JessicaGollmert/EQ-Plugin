@@ -10,17 +10,26 @@
 
 #include <JuceHeader.h>
 
+/** Class to create a High-Pass Filter */
+
 class HighPassFilter
 {
     
 public:
+    /** Constructor */
     HighPassFilter();
     
+    /** Destructor */
     ~HighPassFilter();
     
-    
+    /** sets the filter coefficients
+    @param sampleRate current sample rate
+    @param frequency cutoff frequency
+    @param Q filter badnwidth*/
     void setFilter ( float sampleRate, float frequency, float Q );
     
+    /** applies the filter to a spcified sample
+    @param sample sample to apply filter to*/
     float applyFilter (float samples);
     
 private:

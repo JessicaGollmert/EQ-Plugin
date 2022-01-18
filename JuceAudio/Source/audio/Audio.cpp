@@ -21,7 +21,6 @@ Audio::Audio()
     if ( ! errorMessage.isEmpty())
         DBG (errorMessage);
     audioDeviceManager.addAudioCallback (this);
-    
 }
 
 Audio::~Audio()
@@ -65,16 +64,20 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     float *outL = outputChannelData[0];
     float *outR = outputChannelData[1];
     
+//    DBG(numInputChannels << "\n" << numOutputChannels);
+    
     while(numSamples--)
     {
         *outL = filePlayer.processSampleL(*outL); // mono -> needs to be stereo
 
-//        *outL = hpf.applyFilter(*outL);
-//        *outL = bpf.applyFilter(*outL);
+//        *outL = bpf[0].applyFilter(*outL) * gain[0]; // get gain from gainslider!
+//        *outL = bpf[1].applyFilter(*outL) * gain[1];
+//        *outL = bpf[2].applyFilter(*outL) * gain[2];
 //        if(filterGui->buttonOn == true)
 //        {
             *outL = lpf.applyFilter(*outL);
 //        }
+            *outL = hpf.applyFilter(*outL);
 
         
 //        *outL = hpf.applyFilter(bpf.applyFilter(lpf.applyFilter(*outL)));
@@ -91,7 +94,9 @@ void Audio::audioDeviceAboutToStart (AudioIODevice* device)
 {
     samplerate = device->getCurrentSampleRate();
     filePlayer.setSamplerate (samplerate);
-    bpf.setFilter(samplerate, 1000.0f, 0.1f);
+    bpf[0].setFilter(samplerate, 100.f, 0.1f);
+    bpf[1].setFilter(samplerate, 300.f, 0.1f);
+    bpf[2].setFilter(samplerate, 3000.0f, 0.1f);
     lpf.setFilter(samplerate, 2000.0f, 0.5f);
     hpf.setFilter(samplerate, 100.0f, 0.5f);
 }
@@ -101,9 +106,20 @@ void Audio::audioDeviceStopped()
 
 }
 
-void Audio::setFilterFreqAndQ(float freqeuncy, float q)
+void Audio::setLPF(float frequency, float q)
 {
-//    bpf.setFilter(samplerate, freqeuncy, q);
-//    lpf.setFilter(samplerate, freqeuncy, q);
-//    hpf.setFilter(samplerate, freqeuncy, q);
+    lpf.setFilter(samplerate, frequency, q);
+}
+
+void Audio::setHPF(float frequency, float q)
+{
+    hpf.setFilter(samplerate, frequency, q);
+}
+
+void Audio::setBPF(float frequency, float q)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        bpf[i].setFilter(samplerate, frequency, q);
+    }
 }

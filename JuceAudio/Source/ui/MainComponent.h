@@ -24,6 +24,7 @@
 */
 class MainComponent   : public Component,
                         public MenuBarModel
+//                        public Button::Listener
 {
 public:
     //==============================================================================
@@ -55,6 +56,9 @@ public:
     PopupMenu getMenuForIndex (int topLevelMenuIndex, const String& menuName) override;
     void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
         
+//    //Button::Listener=============================================================
+//    void buttonClicked (Button* button) override;
+    
     void setValues ();
     
 private:
@@ -66,11 +70,15 @@ private:
     BPFGui bandPassGui3;
     PlaybackGui playbackGui;
 //    AudioVisualiser audioVisualiser;
+//    Visualiser audioVis;
     
     TextEditor hertzValues [5];
     
     float xValues [3];
     float yValues [3];
+    
+//    TextButton visOnOff { "VIS" };
+//    bool buttonOn = false;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

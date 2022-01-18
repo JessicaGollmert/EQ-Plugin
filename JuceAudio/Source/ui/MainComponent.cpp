@@ -29,7 +29,17 @@ MainComponent::MainComponent (Audio& a)
     
     addAndMakeVisible (playbackGui);
     
-//    addAndMakeVisible(audioVisualiser);
+    lowPassGui.setAudio(&audio);
+    highPassGui.setAudio(&audio);
+    bandPassGui1.setAudio(&audio);
+    bandPassGui2.setAudio(&audio);
+    bandPassGui3.setAudio(&audio);
+
+    
+//    bandPassGui1.se
+    
+//    addAndMakeVisible(audioVis);
+//    addAndMakeVisible(AudioVisualiser);
     
     for (int i = 0; i < 5; i++)
     {
@@ -43,6 +53,10 @@ MainComponent::MainComponent (Audio& a)
     hertzValues[2].setText("700Hz");
     hertzValues[3].setText("3000Hz");
     hertzValues[4].setText("20000Hz");
+    
+//    visOnOff.addListener (this);
+//    visOnOff.setColour (TextButton::buttonColourId, Colours::darkgrey);
+//    addAndMakeVisible (visOnOff);
 }
 
 MainComponent::~MainComponent()
@@ -61,8 +75,6 @@ void MainComponent::resized()
     const auto halfWidth = 60;
     const auto height = 310; // small component
     const auto largeHeight = 405; // large component
-
-//    audioVisualiser.setBounds(3, 13, getWidth() - 6, 265);
     
     highPassGui.setBounds (paddingXleft, filterOffsetY, width, height);
     
@@ -79,6 +91,11 @@ void MainComponent::resized()
     hertzValues[2].setBounds(getWidth() / 2 - 25, 250, 50, 30); // 700Hz
     hertzValues[3].setBounds(650, 250, 50, 30); // 3000Hz
     hertzValues[4].setBounds(getWidth() - 60, 250, 65, 30); // 20000Hz
+    
+//    audioVis.setBounds(3, 13, getWidth() - 6, 265);
+//    AudioVisualiser.setBounds(3, 13, getWidth() - 6, 265);
+    
+//    visOnOff.setBounds(getLocalBounds().getRight() - 55, getLocalBounds().getBottom() - 35, 50, 30);
 }
 
 void MainComponent::paint (Graphics& g)
@@ -142,6 +159,22 @@ void MainComponent::menuItemSelected (int menuItemID, int topLevelMenuIndex)
         }
     }
 }
+
+//void MainComponent::buttonClicked (Button* button)
+//{
+//    if (button == &visOnOff && buttonOn == false)
+//    {
+//        buttonOn = true;
+//        visOnOff.setButtonText( "ON" );
+//        visOnOff.setColour(TextButton::buttonColourId, Colours::lightgrey);
+//    }
+//    else if (button == &visOnOff && buttonOn == true)
+//    {
+//        buttonOn = false;
+//        visOnOff.setButtonText( "OFF" );
+//        visOnOff.setColour (TextButton::buttonColourId, Colours::darkgrey);
+//    }
+//}
 
 void MainComponent::setValues()
 {

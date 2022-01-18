@@ -12,7 +12,7 @@
 LPFGui::LPFGui(String name)
 {
     componentName = name;
-    frequencySlider.setNormalisableRange(NormalisableRange<double> { 8000.0f, 20000.0f, 0.01f, 0.6f } );
+    frequencySlider.setNormalisableRange(NormalisableRange<double> { 20.0f, 20000.0f, 0.01f, 0.6f } );
 }
 
 LPFGui::~LPFGui()
@@ -22,13 +22,14 @@ LPFGui::~LPFGui()
 
 void LPFGui::sliderValueChanged(Slider *slider)
 {
-    if (this->lpf != nullptr)
-    {
-        this->lpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
-    }
-    else
-    {
-        DBG("Pointer still null!");
-    }
+//    if (lpf != nullptr)
+//    {
+//        lpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
+        audio->setLPF(frequencySlider.getValue(), qSlider.getValue());
+//    }
+//    else
+//    {
+//        DBG("Pointer still null!");
+//    }
 }
 

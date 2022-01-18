@@ -9,8 +9,9 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../audio/BPF.hpp"
+//#include "../audio/BPF.hpp"
 #include "FilterBase.hpp"
+#include "../audio/Audio.h"
 
 /** Class for the Band-Pass Filter UI component. Does not use the FilterGui base class */
 
@@ -57,6 +58,9 @@ public:
      @see convertFreqToX()*/
     float convertGaintoY(float oldValueY, float oldMaxY, float oldMinY, float newMaxY, float newMinY);
     
+//    void setBPF(BandPassFilter* b) { bpf = b; }
+    void setAudio(Audio* aPtr) { audio = aPtr; }
+    
     /** Sliders public to be accessed by MainComponent */
     Slider frequencySlider;
     
@@ -78,4 +82,6 @@ private:
     
     TextButton bandOnOffButton { "OFF" };
     bool buttonOn = false;
+    
+    Audio* audio {nullptr};
 };

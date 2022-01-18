@@ -12,7 +12,7 @@ HPFGui::HPFGui(String name)
 
 {
     componentName = name;
-    frequencySlider.setNormalisableRange(NormalisableRange<double> { 0.0f, 8000.0f, 0.01f, 0.6f } );
+    frequencySlider.setNormalisableRange(NormalisableRange<double> { 20.0f, 20000.0f, 0.01f, 0.6f } );
     
 }
 
@@ -23,12 +23,13 @@ HPFGui::~HPFGui()
 
 void HPFGui::sliderValueChanged(Slider *slider)
 {
-    if (this->hpf != nullptr)
-    {
-        this->hpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
-    }
-    else
-    {
-        DBG("Pointer still null!");
-    }
+//    if (this->hpf != nullptr)
+//    {
+//        this->hpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
+        audio->setHPF(frequencySlider.getValue(), qSlider.getValue());
+//    }
+//    else
+//    {
+//        DBG("Pointer still null!");
+//    }
 }

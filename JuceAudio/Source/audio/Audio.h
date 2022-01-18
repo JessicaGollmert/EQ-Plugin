@@ -16,8 +16,7 @@
 #include "LPF.hpp"
 #include "HPF.hpp"
 #include "../ui/FilterBase.hpp"
-#include "../ui/BPFGui.hpp"
-
+//#include "../ui/BPFGui.hpp"
 
 /** Class containing all audio processes */
 
@@ -48,14 +47,18 @@ public:
     
 //    void setFilter (FilterGui* filterPtr) { filterGui = filterPtr; }
     
-    void setFilterFreqAndQ (float frequency, float q);
+    void setLPF (float frequency, float q);
+    void setHPF (float frequency, float q);
+    void setBPF (float frequency, float q);
+    
+    BandPassFilter* getBPF(int bandNumber) { return &bpf [bandNumber]; }
     
     float samplerate = 0.0f;
     
 private:
     AudioDeviceManager audioDeviceManager;
     FilePlayback filePlayer;
-    BandPassFilter bpf;
+    BandPassFilter bpf [3];
     LowPassFilter lpf;
     HighPassFilter hpf;
     

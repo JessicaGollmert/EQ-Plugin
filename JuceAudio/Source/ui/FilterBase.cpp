@@ -13,7 +13,7 @@ FilterGui::FilterGui()
     frequencySlider.setTextValueSuffix (" Hz");
     setSliderAndLabel(frequencySlider, frequencyLabel);
     
-    qSlider.setNormalisableRange(NormalisableRange<double> { 1.0f, 10.0f, 0.01f } );
+    qSlider.setNormalisableRange(NormalisableRange<double> { 0.1f, 5.0f, 0.01f } );
     setSliderAndLabel(qSlider, qLabel);
     
     bandOnOffButton.addListener (this);

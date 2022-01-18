@@ -12,6 +12,7 @@ FilePlayback::FilePlayback()
 {
     audioBuffer.setSize(1, currentSamplerate);
     audioBuffer.clear();
+    audioVis.clear();
 }
 
 FilePlayback::~FilePlayback()
@@ -34,7 +35,7 @@ float FilePlayback::processSampleL(float input)
     auto outputL = 0.0f;
 //    float* audioSample;
     
-    if (playState.load() == true)
+    if (playState.load() == true && audioBuffer.getNumSamples() > 0)
     {
         //play
         outputL = *audioBuffer.getWritePointer(0, bufferPosition);
@@ -87,6 +88,7 @@ void FilePlayback::load ()
             reader->read (&audioBuffer, 0, (int)reader->lengthInSamples, 0, true, false);
         }
     }
+    audioVis.pushBuffer(audioBuffer);
 }
 
 void FilePlayback::setSamplerate(float samplerate)

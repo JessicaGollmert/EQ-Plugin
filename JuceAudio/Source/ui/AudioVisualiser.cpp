@@ -6,8 +6,8 @@
 //  Copyright © 2021 UWE. All rights reserved.
 //
 
-//#include "AudioVisualiser.hpp"
-//
+#include "AudioVisualiser.hpp"
+
 //AudioVisualiser::AudioVisualiser() : forwardFFT (fftOrder),
 //      window (fftSize, juce::dsp::WindowingFunction<float>::hann)
 //{

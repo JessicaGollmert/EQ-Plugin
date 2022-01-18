@@ -9,8 +9,9 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../audio/HPF.hpp"
+//#include "../audio/HPF.hpp"
 #include "FilterBase.hpp"
+#include "../audio/Audio.h"
 
 /** Class for the High-Pass Filter UI component. Uses the FilterGui base class */
 
@@ -23,12 +24,14 @@ public:
     ~HPFGui();
     
     /** sets the hpf that this gui controls */
-    void setHPF (HighPassFilter* hpfPtr) { hpf = hpfPtr; }
+//    void setHPF (HighPassFilter* hpfPtr) { hpf = hpfPtr; }
+    void setAudio(Audio* aPtr) { audio = aPtr; }
     
     /** callback to slider movement */
     void sliderValueChanged (Slider* slider) override;
         
 private:
     /** pointer to an hpf object */
-    HighPassFilter* hpf {nullptr};
+//    HighPassFilter* hpf {nullptr};
+    Audio* audio {nullptr};
 };
