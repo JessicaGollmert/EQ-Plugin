@@ -32,8 +32,6 @@ public:
      @return output*/
     float processSample ( float input );
     
-//    float processSampleR (float input);
-    
     /** Loads the specified file*/
     void load ();
     
@@ -41,12 +39,16 @@ public:
      @param samplerate*/
     void setSamplerate ( float samplerate );
     
+    /** Initialise buffer position to be 0*/
     unsigned int bufferPosition {0};
     
 private:
+    /** Initialise playState to be false */
     std::atomic<int> playState {false};
     
+    /** AudioBuffer object*/
     AudioBuffer<float> audioBuffer;
     
+    /** initialise samplerate to be 0, to be set by void Audio::audioDeviceAboutToStart ( AudioIODevice* device )*/
     float currentSamplerate = 0.0f;
 };

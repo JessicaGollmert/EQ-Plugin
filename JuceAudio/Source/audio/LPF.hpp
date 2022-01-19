@@ -28,8 +28,10 @@ public:
      @param Q filter badnwidth*/
     void setFilter ( float sampleRate, float frequency, float Q );
     
-    /** applies the filter to a spcified sample
-     @param sample sample to apply filter to*/
+    /** Applies the filter to a spcified sample
+     @param sample sample to apply filter to
+     
+     @return lowPassFilter.processSingleSampleRaw (sample)*/
     float applyFilter ( float sample );
     
 private:

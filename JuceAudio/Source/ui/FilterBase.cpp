@@ -42,7 +42,7 @@ void FilterGui::resized()
     const auto sliderWidth = 100;
     const auto sliderHeight = 90;
     const auto labelYOffset = 20;
-    const auto LabelHeight = 20; // avoids "magic numbers"
+    const auto LabelHeight = 20;
     const auto resonanceY = 170;
     const auto bounds = getLocalBounds();
 

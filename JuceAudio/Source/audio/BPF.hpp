@@ -29,12 +29,17 @@ public:
     void setFilter ( float sampleRate, float frequency, float Q );
     
     /** applies the filter to a spcified sample
-    @param sample sample to apply filter to*/
+    @param sample sample to apply filter to
+     
+    @return bandPassFilter.processSingleSampleRaw ( sample * gain )
+     @see void setGain(float newGain) */
     float applyFilter ( float sample );
     
+    /** Sets the filter band's gain */
     void setGain ( float newGain );
     
-        float gain = 0.0f;
+    /** Variable to be set by void setGain (float newGain) */
+    float gain = 0.0f;
     
 private:
     

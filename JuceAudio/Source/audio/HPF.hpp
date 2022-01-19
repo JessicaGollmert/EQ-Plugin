@@ -29,7 +29,9 @@ public:
     void setFilter ( float sampleRate, float frequency, float Q );
     
     /** applies the filter to a spcified sample
-    @param sample sample to apply filter to*/
+    @param sample sample to apply filter to
+     
+     @return highPassFilter.processSingleSampleRaw (sample)*/
     float applyFilter ( float samples );
     
 private:

@@ -55,7 +55,7 @@ public:
     PopupMenu getMenuForIndex ( int topLevelMenuIndex, const String& menuName ) override;
     void menuItemSelected ( int menuItemID, int topLevelMenuIndex ) override;
     
-    
+    /** Function to set x and y values converted from frequency and q slider */
     void setValues ();
     
 private:
@@ -67,9 +67,13 @@ private:
     BPFGui bandPassGui3;
     PlaybackGui playbackGui;
     
+    /** Textbox displaying Hz values for better UI control*/
     TextEditor hertzValues [5];
     
+    /** X values set by void setValues() */
     float xValues [5];
+    
+    /** Y values set by void setValues() */
     float yValues [3];
     
     //==============================================================================

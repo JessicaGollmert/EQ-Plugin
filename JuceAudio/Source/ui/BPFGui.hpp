@@ -38,26 +38,29 @@ public:
     /** juce::Button::Listener function */
     void buttonClicked ( Button* button ) override;
     
-    /** sets slider style and font of a slider and attached label
+    /** Sets slider style and font of a slider and attached label
      @param slider
      @param label attached to slider */
     void setSliderAndLabel ( Slider& slider, Label& label );
 
-    /** converts slider value, in this case frequency, to a corresponding x value
+    /** Converts slider value, in this case frequency, to a corresponding x value
      @param oldValue current slider value
      @param oldMax slider maximum value
      @param oldMin slider minimum value
      @param newMax new maximum of range to convert to
-     @param newMin new minimum of range to convert to*/
+     @param newMin new minimum of range to convert to
+     
+     @return newValue*/
     float convertFreqToX ( float oldValue, float oldMax, float oldMin, float newMax, float newMin );
     
-    /** converts slider value, in this case Q, to a corresponding y value
+    /** Converts slider value, in this case Q, to a corresponding y value
      @see convertFreqToX()*/
     float convertGaintoY ( float oldValueY, float oldMaxY, float oldMinY, float newMaxY, float newMinY );
 
-    /** sets the bpf that this gui controls */
+    /** Sets the bpf that this gui controls */
     void setBPF ( BandPassFilter* bpfPtr ) { bpf = bpfPtr; }
     
+    /** Sets the audio object this gui controls */
     void setAudio ( Audio* aPtr ) { audio = aPtr; }
     
     /** Sliders public to be accessed by MainComponent */
@@ -67,21 +70,28 @@ public:
     Slider gainSlider;
     
 private:
-    /** pointer to an bpf object */
+    /** Pointer to a bpf object */
     BandPassFilter* bpf { nullptr };
     
+    /** Pointer to an audio object */
     Audio* audio { nullptr };
     
+    /** Label attached to frequency slider*/
     Label frequencyLabel { "Freq", "Frequency" };
     
+    /** Slider to control filter bandwidth q*/
     Slider qSlider;
+    
+    /** Label attached to q slider*/
     Label qLabel { "q", "Q" };
     
+    /** Label attached to gain slider*/
     Label gainLabel { "Gain", "Gain" };
+    
+    /** Button for future addition of band on / off control*/
+    TextButton bandOnOffButton { "OFF" };
+    bool buttonOn = false;
     
     String componentName = "";
     Colour newColour;
-    
-    TextButton bandOnOffButton { "OFF" };
-    bool buttonOn = false;
 };

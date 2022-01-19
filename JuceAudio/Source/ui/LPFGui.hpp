@@ -23,15 +23,13 @@ public:
     /** Destructor */
     ~LPFGui();
 
-    /** sets the lpf that this gui controls */
-//    void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
+    /** Sets the audio object that this gui controls */
     void setAudio ( Audio* aPtr ) { audio = aPtr; }
     
-    /** callback to slider movement */
+    /** Callback to slider movement */
     void sliderValueChanged ( Slider* slider ) override;
     
 private:
-    /** pointer to an lpf object */
-//    LowPassFilter* lpf {nullptr};
+    /** Pointer to an audio object */
     Audio* audio { nullptr };
 };

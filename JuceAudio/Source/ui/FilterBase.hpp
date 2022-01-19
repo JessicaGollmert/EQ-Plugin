@@ -36,17 +36,19 @@ public:
     /** juce::Button::Listener function */
     void buttonClicked ( Button* button ) override;
     
-    /** sets slider style and font of a slider and attached label
+    /** Sets slider style and font of a slider and attached label
      @param slider
      @param label attached to slider */
     void setSliderAndLabel ( Slider& slider, Label& label );
     
-    /** converts slider value, in this case frequency, to a corresponding x value
+    /** Converts slider value, in this case frequency, to a corresponding x value
      @param oldValue current slider value
      @param oldMax slider maximum value
      @param oldMin slider minimum value
      @param newMax new maximum of range to convert to
-     @param newMin new minimum of range to convert to*/
+     @param newMin new minimum of range to convert to
+     
+     @return newValue*/
     float convertFreqToX( float oldValue, float oldMax, float oldMin, float newMax, float newMin );
     
     /** Sliders public to be accessed by MainComponent */
@@ -55,17 +57,20 @@ public:
     /** Sliders public to be accessed by MainComponent */
     Slider qSlider;
     
-    /** bool to keep track of the EQ band on / off state */
+    /** Bool to keep track of the EQ band on / off state */
     bool buttonOn = false;
     
 protected:
-    Label frequencyLabel { "Freq", "Frequency" }; // 1st ID, 2nd text shown
+    /** Label attached to frequency slider*/
+    Label frequencyLabel { "Freq", "Frequency" };
     
+    /** Label attached to q slider*/
     Label qLabel { "q", "Q" };
     
-    String componentName = "";
-    
+    /** Button for future addition of band on / off control*/
     TextButton bandOnOffButton { "OFF" };
+    
+    String componentName = "";
     
     Colour newColour;
 
