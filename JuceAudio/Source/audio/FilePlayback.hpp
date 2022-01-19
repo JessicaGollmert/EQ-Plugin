@@ -21,7 +21,7 @@ public:
     }
 };
 
-/** Simple FilePlayer class - strams audio from a file. */
+/** Simple FilePlayer class - streams audio from a file. */
 class FilePlayback
 {
 public:

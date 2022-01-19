@@ -19,7 +19,8 @@ BPFGui::BPFGui(String name, float minFreq, float maxFreq)
     qSlider.setNormalisableRange(NormalisableRange<double> { 0.1f, 2.0f, 0.01f } );
     setSliderAndLabel(qSlider, qLabel);
     
-    gainSlider.setNormalisableRange (NormalisableRange<double> { -12.0f, 12.0f, 0.01f } );// , 0.0f );
+    gainSlider.setNormalisableRange (NormalisableRange<double> { 0.0f, 2.0, 0.01f } );// , 0.0f );
+    gainSlider.setValue(1.0);
     gainSlider.setTextValueSuffix (" dB");
     setSliderAndLabel(gainSlider, gainLabel);
     
@@ -71,15 +72,9 @@ void BPFGui::resized()
 
 void BPFGui::sliderValueChanged(Slider* slider)
 {
-//    if (this->bpf != nullptr)
-//    {
-//        this->bpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
-//    audio->setBPF(frequencySlider.getValue(), qSlider.getValue());
-//    }
-//    else
-//    {
-//        DBG("Pointer still null!");
-//    }
+    audio->setBPF(frequencySlider.getValue(), qSlider.getValue());
+
+    bpf->setGain(gainSlider.getValue());
 }
 
 void BPFGui::setSliderAndLabel(Slider& slider, Label& label)

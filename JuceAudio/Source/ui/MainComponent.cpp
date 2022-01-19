@@ -34,9 +34,10 @@ MainComponent::MainComponent (Audio& a)
     bandPassGui1.setAudio(&audio);
     bandPassGui2.setAudio(&audio);
     bandPassGui3.setAudio(&audio);
-
     
-//    bandPassGui1.se
+    bandPassGui1.setBPF(&audio.bpf[0]);
+    bandPassGui2.setBPF(&audio.bpf[1]);
+    bandPassGui3.setBPF(&audio.bpf[2]);
     
 //    addAndMakeVisible(audioVis);
 //    addAndMakeVisible(AudioVisualiser);
@@ -56,7 +57,6 @@ MainComponent::MainComponent (Audio& a)
     
 //    visOnOff.addListener (this);
 //    visOnOff.setColour (TextButton::buttonColourId, Colours::darkgrey);
-//    addAndMakeVisible (visOnOff);
 }
 
 MainComponent::~MainComponent()
@@ -94,9 +94,7 @@ void MainComponent::resized()
     
 //    audioVis.setBounds(3, 13, getWidth() - 6, 265);
 //    AudioVisualiser.setBounds(3, 13, getWidth() - 6, 265);
-    
-//    visOnOff.setBounds(getLocalBounds().getRight() - 55, getLocalBounds().getBottom() - 35, 50, 30);
-}
+    }
 
 void MainComponent::paint (Graphics& g)
 {
@@ -199,18 +197,18 @@ void MainComponent::setValues()
     yValues[0] = bandPassGui1.convertGaintoY(bandPassGui1.gainSlider.getValue(),
                                           bandPassGui1.gainSlider.getMaximum(),
                                           bandPassGui1.gainSlider.getMinimum(),
-                                          269.0f,
-                                          1.0f);
+                                          1.0f,
+                                          269.0f);
 
     yValues[1] = bandPassGui2.convertGaintoY(bandPassGui2.gainSlider.getValue(),
                                           bandPassGui2.gainSlider.getMaximum(),
                                           bandPassGui2.gainSlider.getMinimum(),
-                                          270.0f,
-                                          0.0f);
+                                          1.0f,
+                                          269.0f);
 
     yValues[2] = bandPassGui3.convertGaintoY(bandPassGui3.gainSlider.getValue(),
                                           bandPassGui3.gainSlider.getMaximum(),
                                           bandPassGui3.gainSlider.getMinimum(),
-                                          270.0f,
-                                          0.0f);
+                                          1.0f,
+                                          269.0f);
 }

@@ -13,6 +13,7 @@ LPFGui::LPFGui(String name)
 {
     componentName = name;
     frequencySlider.setNormalisableRange(NormalisableRange<double> { 20.0f, 20000.0f, 0.01f, 0.6f } );
+    frequencySlider.setValue(20000.0f);
 }
 
 LPFGui::~LPFGui()

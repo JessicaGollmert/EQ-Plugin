@@ -77,9 +77,6 @@ private:
     float xValues [3];
     float yValues [3];
     
-//    TextButton visOnOff { "VIS" };
-//    bool buttonOn = false;
-    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

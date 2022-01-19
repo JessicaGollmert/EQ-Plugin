@@ -55,33 +55,32 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
                                            int numOutputChannels,
                                            int numSamples)
 {
-    // get the audio from our file player - player puts samples in the output buffer
-//    audioSourcePlayer.audioDeviceIOCallback (inputChannelData, numInputChannels, outputChannelData, numOutputChannels, numSamples);
-    
     //All audio processing is done here
     const float* inL = inputChannelData[0];
 
     float *outL = outputChannelData[0];
     float *outR = outputChannelData[1];
     
-//    DBG(numInputChannels << "\n" << numOutputChannels);
-    
     while(numSamples--)
     {
-        *outL = filePlayer.processSampleL(*outL); // mono -> needs to be stereo
+        *outL = filePlayer.processSampleL(*outL);
 
 //        *outL = bpf[0].applyFilter(*outL) * gain[0]; // get gain from gainslider!
-//        *outL = bpf[1].applyFilter(*outL) * gain[1];
+//        *outL = bpf[1].applyFilter(*outL) * gain[1]; // gain array not needed
 //        *outL = bpf[2].applyFilter(*outL) * gain[2];
-//        if(filterGui->buttonOn == true)
-//        {
-            *outL = lpf.applyFilter(*outL);
-//        }
-            *outL = hpf.applyFilter(*outL);
+        
+        *outL = lpf.applyFilter(*outL);
+    
+        *outL = hpf.applyFilter(*outL);
+        
+//        *outL = bpf[0].applyFilter(*outL) * getBPF(1)->setGain(<#float newGain#>);
+//        *outL = bpf[1].applyFilter(*outL) * getBPF(2)->setGain(<#float newGain#>);
+//        *outL = bpf[2].applyFilter(*outL) * getBPF(3)->setGain(<#float newGain#>);
+        
+        *outL = bpf[0].applyFilter(*outL);
+        *outL = bpf[1].applyFilter(*outL);
+        *outL = bpf[2].applyFilter(*outL);
 
-        
-//        *outL = hpf.applyFilter(bpf.applyFilter(lpf.applyFilter(*outL)));
-        
         *outR = *outL;
         
         inL++;
@@ -123,3 +122,16 @@ void Audio::setBPF(float frequency, float q)
         bpf[i].setFilter(samplerate, frequency, q);
     }
 }
+
+//void Audio::setGain(float newGain[3])
+//{
+//    for (int i = 0; i < 3; i++)
+//    {
+//        gain[i] = newGain[i];
+//    }
+//}
+
+//void Audio::setGain(float newGain)
+//{
+//    gain = newGain;
+//}

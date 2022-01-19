@@ -10,7 +10,7 @@
 
 BandPassFilter::BandPassFilter()
 {
-    
+
 }
 
 BandPassFilter::~BandPassFilter()
@@ -25,8 +25,13 @@ void BandPassFilter::setFilter(float sampleRate, float frequency, float Q)
 
 float BandPassFilter::applyFilter(float sample)
 {
-    return bandPassFilter.processSingleSampleRaw( sample ); // multiply by gain value (in h)
+    return bandPassFilter.processSingleSampleRaw( sample * gain ); // multiply by gain value (in h)
     
     // funtion here setGain, sets gain float, multiply above
     // in BPFGui call that function when slider is moved, gain array in audio not needed
+}
+
+void BandPassFilter::setGain(float newGain)
+{
+    gain = newGain;
 }

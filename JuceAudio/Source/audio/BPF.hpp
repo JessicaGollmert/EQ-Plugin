@@ -32,10 +32,13 @@ public:
     @param sample sample to apply filter to*/
     float applyFilter (float sample);
     
+    void setGain(float newGain);
+    
+        float gain = 0.0f;
+    
 private:
     
     IIRFilter bandPassFilter;
     
-//    std::atomic<int> filterOn {false};
-    
+
 };

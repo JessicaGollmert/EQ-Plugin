@@ -51,17 +51,23 @@ public:
     void setHPF (float frequency, float q);
     void setBPF (float frequency, float q);
     
+//    void setGain (float newGain[3]);
+    void setGain (float newGain);
+
+    
     BandPassFilter* getBPF(int bandNumber) { return &bpf [bandNumber]; }
     
     float samplerate = 0.0f;
     
+//    float gain [3];
+//    float gain = 0.0f;
+    
+        BandPassFilter bpf [3];
+    
 private:
     AudioDeviceManager audioDeviceManager;
     FilePlayback filePlayer;
-    BandPassFilter bpf [3];
+
     LowPassFilter lpf;
     HighPassFilter hpf;
-    
-//    FilterGui* filterGui {nullptr};  // pointer to a filterGui object
-//    BPFGui* bpfGui {nullptr};  // pointer to a bpfGui object
 };

@@ -26,9 +26,6 @@ public:
     /** Destructor */
     ~BPFGui();
     
-    /** sets the bpf that this gui controls */
-    void setBPF (BandPassFilter* bpfPtr) { bpf = bpfPtr; }
-    
     /** juce::Component function */
     void paint (juce::Graphics&) override;
     
@@ -57,8 +54,10 @@ public:
     /** converts slider value, in this case Q, to a corresponding y value
      @see convertFreqToX()*/
     float convertGaintoY(float oldValueY, float oldMaxY, float oldMinY, float newMaxY, float newMinY);
+
+    /** sets the bpf that this gui controls */
+    void setBPF (BandPassFilter* bpfPtr) { bpf = bpfPtr; }
     
-//    void setBPF(BandPassFilter* b) { bpf = b; }
     void setAudio(Audio* aPtr) { audio = aPtr; }
     
     /** Sliders public to be accessed by MainComponent */
@@ -71,6 +70,8 @@ private:
     /** pointer to an bpf object */
     BandPassFilter* bpf {nullptr};
     
+    Audio* audio {nullptr};
+    
     Label frequencyLabel { "Freq", "Frequency" };
     
     Slider qSlider;
@@ -82,6 +83,4 @@ private:
     
     TextButton bandOnOffButton { "OFF" };
     bool buttonOn = false;
-    
-    Audio* audio {nullptr};
 };
