@@ -13,7 +13,7 @@
 Audio::Audio()
 {
     auto midiInputDevices = MidiInput::getAvailableDevices();
-    if (midiInputDevices.size() > 0)
+    if ( midiInputDevices.size() > 0 )
     {
         audioDeviceManager.setMidiInputDeviceEnabled ( midiInputDevices[0].identifier, true );
     }
@@ -24,12 +24,12 @@ Audio::Audio()
     {
         DBG (errorMessage);
     }
-    audioDeviceManager.addAudioCallback (this);
+    audioDeviceManager.addAudioCallback ( this );
 }
 
 Audio::~Audio()
 {
-    audioDeviceManager.removeAudioCallback (this);
+    audioDeviceManager.removeAudioCallback ( this );
     audioDeviceManager.removeMidiInputCallback ( "", this );
 }
 
@@ -67,15 +67,15 @@ void Audio::audioDeviceIOCallback ( const float** inputChannelData,
     
     while (numSamples--)
     {
-        *outL = filePlayer.processSample (*outL);
+        *outL = filePlayer.processSample ( *outL );
         
-        *outL = lpf.applyFilter (*outL);
+        *outL = lpf.applyFilter ( *outL) ;
 
-        *outL = hpf.applyFilter (*outL);
+        *outL = hpf.applyFilter ( *outL );
 
-        *outL = bpf[0].applyFilter (*outL);
-        *outL = bpf[1].applyFilter (*outL);
-        *outL = bpf[2].applyFilter (*outL);
+        *outL = bpf[0].applyFilter ( *outL );
+        *outL = bpf[1].applyFilter ( *outL );
+        *outL = bpf[2].applyFilter ( *outL );
 
         *outR = *outL;
         

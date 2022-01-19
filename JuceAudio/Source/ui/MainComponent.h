@@ -66,8 +66,6 @@ private:
     BPFGui bandPassGui2;
     BPFGui bandPassGui3;
     PlaybackGui playbackGui;
-//    AudioVisualiser audioVisualiser;
-//    Visualiser audioVis;
     
     TextEditor hertzValues [5];
     

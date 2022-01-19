@@ -39,9 +39,6 @@ MainComponent::MainComponent ( Audio& a )
     bandPassGui2.setBPF ( &audio.bpf[1] );
     bandPassGui3.setBPF ( &audio.bpf[2] );
     
-//    addAndMakeVisible(audioVis);
-//    addAndMakeVisible(AudioVisualiser);
-    
     for (int i = 0; i < 5; i++)
     {
         hertzValues[i].applyColourToAllText ( Colours::black );
@@ -54,9 +51,6 @@ MainComponent::MainComponent ( Audio& a )
     hertzValues[2].setText ( "700Hz" );
     hertzValues[3].setText ( "3000Hz" );
     hertzValues[4].setText ( "20000Hz" );
-    
-//    visOnOff.addListener (this);
-//    visOnOff.setColour (TextButton::buttonColourId, Colours::darkgrey);
 }
 
 MainComponent::~MainComponent()
@@ -71,29 +65,30 @@ void MainComponent::resized()
     const auto paddingXright = paddingXleft + 770;
     const auto paddingY = 290;
     const auto filterOffsetY = paddingY + 50;
-    const auto width = 120;
-    const auto halfWidth = 60;
-    const auto height = 310; // small component
-    const auto largeHeight = 405; // large component
+    const auto componentWidth = 120;
+    const auto halfComponentWidth = 60;
+    const auto smallHeight = 310;        // LPF & HPF component
+    const auto largeHeight = 405;        // BPF component
+    const auto halfTotalWidth = getWidth() / 2;
+    const auto bpfStartX = 195;
+    const auto hzTextBoxY = 250;
+    const auto textBoxHeight = 30;
     
-    highPassGui.setBounds ( paddingXleft, filterOffsetY, width, height );
+    highPassGui.setBounds ( paddingXleft, filterOffsetY, componentWidth, smallHeight );
     
-    lowPassGui.setBounds ( paddingXright, filterOffsetY, width, height );
+    lowPassGui.setBounds ( paddingXright, filterOffsetY, componentWidth, smallHeight );
     
-    bandPassGui1.setBounds ( 195, paddingY, width, largeHeight ); // left
-    bandPassGui2.setBounds ( getWidth() / 2 - halfWidth, paddingY, width, largeHeight ); // middle
-    bandPassGui3.setBounds ( 585, paddingY, width, largeHeight ); // right
+    bandPassGui1.setBounds ( bpfStartX, paddingY, componentWidth, largeHeight );                                // left
+    bandPassGui2.setBounds ( halfTotalWidth - halfComponentWidth, paddingY, componentWidth, largeHeight );      // middle
+    bandPassGui3.setBounds ( bpfStartX * 3, paddingY, componentWidth, largeHeight );                            // right
     
     playbackGui.setBounds ( 0, 5, getWidth(), 330 );
     
-    hertzValues[0].setBounds ( 2, 250, 45, 30 ); // 20Hz
-    hertzValues[1].setBounds ( 200, 250, 50, 30 ); // 100Hz
-    hertzValues[2].setBounds ( getWidth() / 2 - 25, 250, 50, 30 ); // 700Hz
-    hertzValues[3].setBounds ( 650, 250, 50, 30 ); // 3000Hz
-    hertzValues[4].setBounds ( getWidth() - 60, 250, 65, 30 ); // 20000Hz
-    
-//    audioVis.setBounds(3, 13, getWidth() - 6, 265);
-//    AudioVisualiser.setBounds(3, 13, getWidth() - 6, 265);
+    hertzValues[0].setBounds ( 2, hzTextBoxY, 45, textBoxHeight );                    // 20Hz
+    hertzValues[1].setBounds ( 200, hzTextBoxY, 50, textBoxHeight );                  // 100Hz
+    hertzValues[2].setBounds ( halfTotalWidth - 25, hzTextBoxY, 50, textBoxHeight );  // 700Hz
+    hertzValues[3].setBounds ( 650, hzTextBoxY, 50, textBoxHeight );                  // 3000Hz
+    hertzValues[4].setBounds ( getWidth() - 60, hzTextBoxY, 65, textBoxHeight );      // 20000Hz
     }
 
 void MainComponent::paint ( Graphics& g )
@@ -101,29 +96,36 @@ void MainComponent::paint ( Graphics& g )
     setValues();
     
     g.fillAll ( Colours::black );
-    g.setColour ( Colours::lightgrey );
+    g.setColour ( Colours::skyblue );
     g.fillRoundedRectangle ( 0, 10, getWidth(), 270, 10 );
     
     g.setColour ( Colours::black );
-    g.fillRect ( 0, 270 / 2 + 10, getWidth(), 2 );                 // 0 dB line
+    g.fillRect ( 0, 145, getWidth(), 3 );                                            // 0 dB line
+                        
+    const auto halfWidth = getWidth() / 2;
+    const auto lineYPos = 10;
+    const auto lineThickness = 2;
+    const auto lineLength = 240;
+    g.fillRect ( 10, lineYPos, lineThickness, lineLength);                           // 20Hz line
+    g.fillRect ( halfWidth / 2, lineYPos, lineThickness, lineLength );               // 100Hz line
+    g.fillRect ( halfWidth, lineYPos, lineThickness, lineLength );                   // 700Hz line
+    g.fillRect ( halfWidth + getWidth() / 4, lineYPos, lineThickness, lineLength );  // 3000Hz line
+    g.fillRect ( getWidth() - 10, lineYPos, lineThickness, lineLength );             // 20000Hz line
     
-    g.fillRect ( 10, 10, 1, 240);                                  // 20Hz
-    g.fillRect ( (getWidth() / 2) / 2, 10, 1, 240 );               // 100Hz
-    g.fillRect ( getWidth() / 2, 10, 1, 240 );                     // 700Hz
-    g.fillRect ( (getWidth() / 2) + getWidth() / 4, 10, 1, 240 );  // 3000Hz
-    g.fillRect ( getWidth() - 10, 10, 1, 240 );                    //20000Hz
-    
+    const auto dotDiameter = 20;
     g.setColour ( Colours::saddlebrown );
-    g.fillEllipse ( xValues[0], yValues[0], 20, 20 );              // Lows 20 - 300
+    g.fillEllipse ( xValues[0], yValues[0], dotDiameter, dotDiameter );              // Lows 20 - 300
     g.setColour ( Colours::olive );
-    g.fillEllipse ( xValues[1], yValues[1], 20, 20 );              // Mids 300 - 3000
+    g.fillEllipse ( xValues[1], yValues[1], dotDiameter, dotDiameter );              // Mids 300 - 3000
     g.setColour ( Colours::darkgreen );
-    g.fillEllipse ( xValues[2], yValues[2], 20, 20 );              // High 3000 - 20000
+    g.fillEllipse ( xValues[2], yValues[2], dotDiameter, dotDiameter );              // High 3000 - 20000
     
+    const auto smallDotDiameter = 15;
+    const auto dotYPosition = 135;
     g.setColour ( Colours::darkred );
-    g.fillEllipse ( xValues[3], 270 / 2, 15, 15 );// HPF Cutoff
+    g.fillEllipse ( xValues[3], dotYPosition, smallDotDiameter, smallDotDiameter );   // HPF Cutoff
     g.setColour ( Colours::darkblue );
-    g.fillEllipse ( xValues[4], 270 / 2, 15, 15 );// LPF Cutoff
+    g.fillEllipse ( xValues[4], dotYPosition, smallDotDiameter, smallDotDiameter );   // LPF Cutoff
     
     repaint();
 }
