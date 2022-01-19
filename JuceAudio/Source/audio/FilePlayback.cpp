@@ -10,9 +10,9 @@
 
 FilePlayback::FilePlayback()
 {
-    audioBuffer.setSize(1, currentSamplerate);
+    audioBuffer.setSize( 1, currentSamplerate );
     audioBuffer.clear();
-    audioVis.clear();
+//    audioVis.clear();
 }
 
 FilePlayback::~FilePlayback()
@@ -20,7 +20,7 @@ FilePlayback::~FilePlayback()
 
 }
 
-void FilePlayback::setPlayState (bool newState)
+void FilePlayback::setPlayState ( bool newState )
 {
     playState = newState;
 }
@@ -30,74 +30,48 @@ bool FilePlayback::isPlaying () const
     return playState.load();
 }
 
-float FilePlayback::processSampleL(float input)
+float FilePlayback::processSample ( float input )
 {
-    auto outputL = 0.0f;
-//    float* audioSample;
+    auto output = 0.0f;
     
-    if (playState.load() == true && audioBuffer.getNumSamples() > 0)
+    if ( playState.load() == true && audioBuffer.getNumSamples() > 0 )
     {
         //play
-        outputL = *audioBuffer.getWritePointer(0, bufferPosition);
+        output = *audioBuffer.getWritePointer ( 0, bufferPosition );
         
         // increment and cycle buffer
-        if (++bufferPosition >= audioBuffer.getNumSamples())
+        if ( ++bufferPosition >= audioBuffer.getNumSamples() )
         {
             bufferPosition = 0;
         }
     }
-    return outputL;
+    return output;
 }
-
-//float FilePlayback::processSampleR(float input)
-//{
-//        auto outputR = 0.0f;
-//    //    float* audioSample;
-//
-//        if (playState.load() == true)
-//        {
-//            //play
-//            outputR = *audioBuffer.getWritePointer(1, bufferPosition);
-//
-//            // increment and cycle buffer
-//            if (++bufferPosition >= audioBuffer.getNumSamples())
-//            {
-//                bufferPosition = 0;
-//            }
-//        }
-//        return outputR;
-//}
 
 void FilePlayback::load ()
 {
     AudioFormatManager formatManager;
     formatManager.registerBasicFormats();
     
-    FileChooser chooser ("Please select the file you want to load...",
-                         File::getSpecialLocation(File::userHomeDirectory),
-                         formatManager.getWildcardForAllFormats());
+    FileChooser chooser ( "Please select the file you want to load...",
+                         File::getSpecialLocation ( File::userHomeDirectory ),
+                         formatManager.getWildcardForAllFormats() );
     
-    if (chooser.browseForFileToOpen())
+    if ( chooser.browseForFileToOpen() )
     {
-        File file (chooser.getResult());
-        std::unique_ptr<AudioFormatReader> reader (formatManager.createReaderFor (file));
+        File file ( chooser.getResult() );
+        std::unique_ptr<AudioFormatReader> reader ( formatManager.createReaderFor (file) );
         
-        if (reader != nullptr)
+        if ( reader != nullptr )
         {
-            audioBuffer.setSize(reader->numChannels, (int)reader->lengthInSamples);
-            reader->read (&audioBuffer, 0, (int)reader->lengthInSamples, 0, true, false);
+            audioBuffer.setSize ( reader->numChannels, (int) reader->lengthInSamples );
+            reader->read ( &audioBuffer, 0, (int) reader->lengthInSamples, 0, true, false );
         }
     }
-    audioVis.pushBuffer(audioBuffer);
+//    audioVis.pushBuffer ( audioBuffer );
 }
 
-void FilePlayback::setSamplerate(float samplerate)
+void FilePlayback::setSamplerate ( float samplerate )
 {
     currentSamplerate = samplerate;
 }
-
-//void FilePlayback::setPosition(double newPosition)
-//{
-//    
-//}
-

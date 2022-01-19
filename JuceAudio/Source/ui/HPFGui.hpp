@@ -19,19 +19,19 @@ class HPFGui : public FilterGui
 {
 public:
     /** Constructor */
-    HPFGui(String name);
+    HPFGui ( String name );
     /** Destructor */
     ~HPFGui();
     
     /** sets the hpf that this gui controls */
 //    void setHPF (HighPassFilter* hpfPtr) { hpf = hpfPtr; }
-    void setAudio(Audio* aPtr) { audio = aPtr; }
+    void setAudio ( Audio* aPtr ) { audio = aPtr; }
     
     /** callback to slider movement */
-    void sliderValueChanged (Slider* slider) override;
+    void sliderValueChanged ( Slider* slider ) override;
         
 private:
     /** pointer to an hpf object */
 //    HighPassFilter* hpf {nullptr};
-    Audio* audio {nullptr};
+    Audio* audio { nullptr };
 };

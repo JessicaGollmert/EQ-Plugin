@@ -19,19 +19,19 @@ class LPFGui : public FilterGui
 {
 public:
     /** Constructor */
-    LPFGui(String name);
+    LPFGui ( String name );
     /** Destructor */
     ~LPFGui();
 
     /** sets the lpf that this gui controls */
 //    void setLPF (LowPassFilter* lpfPtr) { lpf = lpfPtr; }
-    void setAudio(Audio* aPtr) { audio = aPtr; }
+    void setAudio ( Audio* aPtr ) { audio = aPtr; }
     
     /** callback to slider movement */
-    void sliderValueChanged (Slider* slider) override;
+    void sliderValueChanged ( Slider* slider ) override;
     
 private:
     /** pointer to an lpf object */
 //    LowPassFilter* lpf {nullptr};
-    Audio* audio {nullptr};
+    Audio* audio { nullptr };
 };

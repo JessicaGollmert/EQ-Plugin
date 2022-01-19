@@ -21,27 +21,27 @@ class BPFGui :   public Component,
 {
 public:
     /** Constructor */
-    BPFGui(String name, float minFreq, float maxFreq);
+    BPFGui ( Colour colour, String name, float minFreq, float maxFreq );
     
     /** Destructor */
     ~BPFGui();
     
     /** juce::Component function */
-    void paint (juce::Graphics&) override;
+    void paint ( Graphics& ) override;
     
     /** juce::Component function */
     void resized () override;
     
     /** juce::Slider::Listener function */
-    void sliderValueChanged (Slider* slider) override;
+    void sliderValueChanged ( Slider* slider ) override;
     
     /** juce::Button::Listener function */
-    void buttonClicked (Button* button) override;
+    void buttonClicked ( Button* button ) override;
     
     /** sets slider style and font of a slider and attached label
      @param slider
      @param label attached to slider */
-    void setSliderAndLabel(Slider& slider, Label& label);
+    void setSliderAndLabel ( Slider& slider, Label& label );
 
     /** converts slider value, in this case frequency, to a corresponding x value
      @param oldValue current slider value
@@ -49,16 +49,16 @@ public:
      @param oldMin slider minimum value
      @param newMax new maximum of range to convert to
      @param newMin new minimum of range to convert to*/
-    float convertFreqToX(float oldValue, float oldMax, float oldMin, float newMax, float newMin);
+    float convertFreqToX ( float oldValue, float oldMax, float oldMin, float newMax, float newMin );
     
     /** converts slider value, in this case Q, to a corresponding y value
      @see convertFreqToX()*/
-    float convertGaintoY(float oldValueY, float oldMaxY, float oldMinY, float newMaxY, float newMinY);
+    float convertGaintoY ( float oldValueY, float oldMaxY, float oldMinY, float newMaxY, float newMinY );
 
     /** sets the bpf that this gui controls */
-    void setBPF (BandPassFilter* bpfPtr) { bpf = bpfPtr; }
+    void setBPF ( BandPassFilter* bpfPtr ) { bpf = bpfPtr; }
     
-    void setAudio(Audio* aPtr) { audio = aPtr; }
+    void setAudio ( Audio* aPtr ) { audio = aPtr; }
     
     /** Sliders public to be accessed by MainComponent */
     Slider frequencySlider;
@@ -68,9 +68,9 @@ public:
     
 private:
     /** pointer to an bpf object */
-    BandPassFilter* bpf {nullptr};
+    BandPassFilter* bpf { nullptr };
     
-    Audio* audio {nullptr};
+    Audio* audio { nullptr };
     
     Label frequencyLabel { "Freq", "Frequency" };
     
@@ -80,6 +80,7 @@ private:
     Label gainLabel { "Gain", "Gain" };
     
     String componentName = "";
+    Colour newColour;
     
     TextButton bandOnOffButton { "OFF" };
     bool buttonOn = false;

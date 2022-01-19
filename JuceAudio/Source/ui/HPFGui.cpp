@@ -8,11 +8,12 @@
 
 #include "HPFGui.hpp"
 
-HPFGui::HPFGui(String name)
+HPFGui::HPFGui ( String name ) :
+FilterGui ( Colours::darkred )
 
 {
     componentName = name;
-    frequencySlider.setNormalisableRange(NormalisableRange<double> { 20.0f, 20000.0f, 0.01f, 0.6f } );
+    frequencySlider.setNormalisableRange ( NormalisableRange<double> { 20.0f, 20000.0f, 0.1f, 0.6f } );
     
 }
 
@@ -21,15 +22,7 @@ HPFGui::~HPFGui()
     
 }
 
-void HPFGui::sliderValueChanged(Slider *slider)
+void HPFGui::sliderValueChanged ( Slider *slider )
 {
-//    if (this->hpf != nullptr)
-//    {
-//        this->hpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
-        audio->setHPF(frequencySlider.getValue(), qSlider.getValue());
-//    }
-//    else
-//    {
-//        DBG("Pointer still null!");
-//    }
+    audio->setHPF ( frequencySlider.getValue(), qSlider.getValue() );
 }

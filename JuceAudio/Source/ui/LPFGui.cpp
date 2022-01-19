@@ -9,11 +9,12 @@
 #include "LPFGui.hpp"
 #include "FilterBase.hpp"
 
-LPFGui::LPFGui(String name)
+LPFGui::LPFGui ( String name ) :
+FilterGui(Colours::darkblue)
 {
     componentName = name;
-    frequencySlider.setNormalisableRange(NormalisableRange<double> { 20.0f, 20000.0f, 0.01f, 0.6f } );
-    frequencySlider.setValue(20000.0f);
+    frequencySlider.setNormalisableRange ( NormalisableRange<double> { 20.0f, 20000.0f, 0.1f, 0.6f } );
+    frequencySlider.setValue ( 20000.0f );
 }
 
 LPFGui::~LPFGui()
@@ -21,16 +22,8 @@ LPFGui::~LPFGui()
     
 }
 
-void LPFGui::sliderValueChanged(Slider *slider)
+void LPFGui::sliderValueChanged ( Slider *slider )
 {
-//    if (lpf != nullptr)
-//    {
-//        lpf->setFilter(48000, frequencySlider.getValue(), qSlider.getValue());
-        audio->setLPF(frequencySlider.getValue(), qSlider.getValue());
-//    }
-//    else
-//    {
-//        DBG("Pointer still null!");
-//    }
+        audio->setLPF ( frequencySlider.getValue(), qSlider.getValue() );
 }
 

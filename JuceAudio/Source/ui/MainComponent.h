@@ -24,19 +24,18 @@
 */
 class MainComponent   : public Component,
                         public MenuBarModel
-//                        public Button::Listener
 {
 public:
     //==============================================================================
     /** Constructor */
-    MainComponent (Audio& a);
+    MainComponent ( Audio& a );
 
     /** Destructor */
     ~MainComponent();
 
     //Comoponent====================================================================
     void resized() override;
-    void paint (Graphics&) override;
+    void paint ( Graphics& ) override;
     
     //MenuBarEnums/MenuBarModel=====================================================
     enum Menus
@@ -53,11 +52,9 @@ public:
         NumFileItems
     };
     StringArray getMenuBarNames() override;
-    PopupMenu getMenuForIndex (int topLevelMenuIndex, const String& menuName) override;
-    void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
-        
-//    //Button::Listener=============================================================
-//    void buttonClicked (Button* button) override;
+    PopupMenu getMenuForIndex ( int topLevelMenuIndex, const String& menuName ) override;
+    void menuItemSelected ( int menuItemID, int topLevelMenuIndex ) override;
+    
     
     void setValues ();
     
@@ -74,9 +71,9 @@ private:
     
     TextEditor hertzValues [5];
     
-    float xValues [3];
+    float xValues [5];
     float yValues [3];
     
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR ( MainComponent )
 };

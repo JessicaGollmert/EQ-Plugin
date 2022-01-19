@@ -10,16 +10,16 @@
 
 #include <JuceHeader.h>
 
-class Visualiser : public AudioVisualiserComponent
-{
-public:
-    Visualiser() : AudioVisualiserComponent (2)
-    {
-        setBufferSize(512);
-        setSamplesPerBlock(256);
-        setColours(Colours::black, Colours::indianred);
-    }
-};
+//class Visualiser : public AudioVisualiserComponent
+//{
+//public:
+//    Visualiser() : AudioVisualiserComponent (2)
+//    {
+//        setBufferSize(512);
+//        setSamplesPerBlock(256);
+//        setColours(Colours::black, Colours::indianred);
+//    }
+//};
 
 /** Simple FilePlayer class - streams audio from a file. */
 class FilePlayback
@@ -33,15 +33,15 @@ public:
     
     /** Starts or stops playback
      @param newState*/
-    void setPlayState (bool newState);
+    void setPlayState ( bool newState );
     
     /** Gets the current playback state*/
     bool isPlaying() const;
     
     /** Processes the audio sample by sample.
      @param input
-     @return outputL*/
-    float processSampleL (float input);
+     @return output*/
+    float processSample ( float input );
     
 //    float processSampleR (float input);
     
@@ -50,7 +50,7 @@ public:
     
     /** Sets the sample rate
      @param samplerate*/
-    void setSamplerate (float samplerate);
+    void setSamplerate ( float samplerate );
     
     unsigned int bufferPosition {0};
     
@@ -61,5 +61,5 @@ private:
     
     float currentSamplerate = 0.0f;
     
-    Visualiser audioVis;
+//    Visualiser audioVis;
 };

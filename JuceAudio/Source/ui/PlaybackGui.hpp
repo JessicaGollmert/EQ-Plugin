@@ -24,13 +24,13 @@ public:
     ~PlaybackGui();
     
     /** sets the file player that this gui controls */
-    void setFilePlayer (FilePlayback* fp);
+    void setFilePlayer ( FilePlayback* fp );
     
     /** juce::Component function */
     void resized() override;
     
     /** juce::Button::Listener function */
-    void buttonClicked (Button* button) override;
+    void buttonClicked ( Button* button ) override;
 
 private:
     

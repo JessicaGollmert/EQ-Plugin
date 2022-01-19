@@ -30,9 +30,9 @@ public:
     
     /** applies the filter to a spcified sample
     @param sample sample to apply filter to*/
-    float applyFilter (float sample);
+    float applyFilter ( float sample );
     
-    void setGain(float newGain);
+    void setGain ( float newGain );
     
         float gain = 0.0f;
     

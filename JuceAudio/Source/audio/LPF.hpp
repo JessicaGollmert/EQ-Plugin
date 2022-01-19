@@ -30,7 +30,7 @@ public:
     
     /** applies the filter to a spcified sample
      @param sample sample to apply filter to*/
-    float applyFilter (float sample);
+    float applyFilter ( float sample );
     
 private:
     

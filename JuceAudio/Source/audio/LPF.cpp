@@ -20,10 +20,10 @@ LowPassFilter::~LowPassFilter()
 
 void LowPassFilter::setFilter( float sampleRate, float frequency, float Q )
 {
-    lowPassFilter.setCoefficients ( IIRCoefficients::makeLowPass (sampleRate, frequency, Q ) );
+    lowPassFilter.setCoefficients ( IIRCoefficients::makeLowPass ( sampleRate, frequency, Q ) );
 }
 
-float LowPassFilter::applyFilter(float sample)
+float LowPassFilter::applyFilter ( float sample )
 {
-    return lowPassFilter.processSingleSampleRaw ( sample );
+    return lowPassFilter.processSingleSampleRaw (sample);
 }

@@ -10,14 +10,14 @@
 
 PlaybackGui::PlaybackGui()
 {
-    playButton.addListener (this);
-    playButton.setColour (TextButton::buttonColourId, Colours::green);
-    playButton.setColour (TextButton::buttonOnColourId, Colours::red);
-    addAndMakeVisible (playButton);
+    playButton.addListener ( this );
+    playButton.setColour ( TextButton::buttonColourId, Colours::green );
+    playButton.setColour ( TextButton::buttonOnColourId, Colours::red );
+    addAndMakeVisible ( playButton );
     
-    loadButton.addListener(this);
-    loadButton.setColour (TextButton::buttonColourId, Colours::darkcyan);
-    addAndMakeVisible(loadButton);
+    loadButton.addListener ( this );
+    loadButton.setColour ( TextButton::buttonColourId, Colours::darkcyan );
+    addAndMakeVisible ( loadButton );
 }
 
 PlaybackGui::~PlaybackGui()
@@ -28,38 +28,38 @@ PlaybackGui::~PlaybackGui()
 //Component
 void PlaybackGui::resized()
 {
-        playButton.setBounds(15, 280, 100, 50);
-        loadButton.setBounds(785, playButton.getY(), 100, 50);
+        playButton.setBounds ( 15, 280, 100, 50 );
+        loadButton.setBounds ( 785, playButton.getY(), 100, 50 );
 }
 
 //Button Listener
-void PlaybackGui::buttonClicked (Button* button)
+void PlaybackGui::buttonClicked ( Button* button )
 {
-    if (filePlayer == nullptr)
+    if ( filePlayer == nullptr  )
     {
         return;
     }
 
-    if (filePlayer != nullptr && button == &playButton)
+    if ( filePlayer != nullptr && button == &playButton )
     {
-        filePlayer->setPlayState( ! filePlayer->isPlaying());
-        playButton.setToggleState(filePlayer->isPlaying(), dontSendNotification);
-        if (filePlayer->isPlaying())
+        filePlayer->setPlayState( ! filePlayer->isPlaying() );
+        playButton.setToggleState ( filePlayer->isPlaying(), dontSendNotification );
+        if ( filePlayer->isPlaying() )
         {
-            playButton.setButtonText("Pause");
+            playButton.setButtonText ( "Pause" );
         }
         else
         {
-            playButton.setButtonText("Play");
+            playButton.setButtonText ( "Play" );
         }
     }
-    else if (button == &loadButton)
+    else if ( button == &loadButton )
     {
-        if (filePlayer->isPlaying())
+        if ( filePlayer->isPlaying() )
         {
-            AlertWindow::showMessageBoxAsync(AlertWindow::WarningIcon,
+            AlertWindow::showMessageBoxAsync ( AlertWindow::WarningIcon,
                                              "Error", "Stop playback before loading", "OK",
-                                             this);
+                                             this );
         }
         else
         {
@@ -69,7 +69,7 @@ void PlaybackGui::buttonClicked (Button* button)
     }
 }
 
-void PlaybackGui::setFilePlayer (FilePlayback* fp)
+void PlaybackGui::setFilePlayer ( FilePlayback* fp )
 {
     filePlayer = fp;
 }

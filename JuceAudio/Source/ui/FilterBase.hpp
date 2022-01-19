@@ -19,27 +19,27 @@ class FilterGui : public Component,
 {
 public:
     /** Filter constructor */
-    FilterGui();
+    FilterGui ( Colour colour );
     
     /** Filter destructor */
     virtual ~FilterGui() = default;
     
     /** juce::Component function */
-    void paint (juce::Graphics&) override;
+    void paint ( Graphics& ) override;
     
     /** juce::Component function */
     void resized() override;
     
     /** juce::Slider::Listener function */
-    void sliderValueChanged (Slider* slider) override;
+    void sliderValueChanged ( Slider* slider ) override;
     
     /** juce::Button::Listener function */
-    void buttonClicked (Button* button) override;
+    void buttonClicked ( Button* button ) override;
     
     /** sets slider style and font of a slider and attached label
      @param slider
      @param label attached to slider */
-    void setSliderAndLabel(Slider& slider, Label& label);
+    void setSliderAndLabel ( Slider& slider, Label& label );
     
     /** converts slider value, in this case frequency, to a corresponding x value
      @param oldValue current slider value
@@ -47,7 +47,7 @@ public:
      @param oldMin slider minimum value
      @param newMax new maximum of range to convert to
      @param newMin new minimum of range to convert to*/
-    float convertFreqToX(float oldValue, float oldMax, float oldMin, float newMax, float newMin);
+    float convertFreqToX( float oldValue, float oldMax, float oldMin, float newMax, float newMin );
     
     /** Sliders public to be accessed by MainComponent */
     Slider frequencySlider;
@@ -66,5 +66,7 @@ protected:
     String componentName = "";
     
     TextButton bandOnOffButton { "OFF" };
+    
+    Colour newColour;
 
 };

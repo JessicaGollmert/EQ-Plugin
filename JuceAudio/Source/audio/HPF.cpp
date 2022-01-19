@@ -18,12 +18,12 @@ HighPassFilter::~HighPassFilter()
     
 }
 
-void HighPassFilter::setFilter( float sampleRate, float frequency, float Q )
+void HighPassFilter::setFilter ( float sampleRate, float frequency, float Q )
 {
-    highPassFilter.setCoefficients ( IIRCoefficients::makeHighPass (sampleRate, frequency, Q ) );
+    highPassFilter.setCoefficients ( IIRCoefficients::makeHighPass ( sampleRate, frequency, Q ) );
 }
 
-float HighPassFilter::applyFilter(float sample)
+float HighPassFilter::applyFilter ( float sample )
 {
     return highPassFilter.processSingleSampleRaw (sample);
 }

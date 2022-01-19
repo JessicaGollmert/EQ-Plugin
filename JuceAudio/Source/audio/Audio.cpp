@@ -14,19 +14,23 @@ Audio::Audio()
 {
     auto midiInputDevices = MidiInput::getAvailableDevices();
     if (midiInputDevices.size() > 0)
-        audioDeviceManager.setMidiInputDeviceEnabled (midiInputDevices[0].identifier, true);
-    audioDeviceManager.addMidiInputCallback ("", this);
+    {
+        audioDeviceManager.setMidiInputDeviceEnabled ( midiInputDevices[0].identifier, true );
+    }
+    audioDeviceManager.addMidiInputCallback ( "", this );
     
-    auto errorMessage = audioDeviceManager.initialiseWithDefaultDevices (1, 2);
-    if ( ! errorMessage.isEmpty())
+    auto errorMessage = audioDeviceManager.initialiseWithDefaultDevices ( 1, 2 );
+    if ( ! errorMessage.isEmpty() )
+    {
         DBG (errorMessage);
+    }
     audioDeviceManager.addAudioCallback (this);
 }
 
 Audio::~Audio()
 {
     audioDeviceManager.removeAudioCallback (this);
-    audioDeviceManager.removeMidiInputCallback ("", this);
+    audioDeviceManager.removeMidiInputCallback ( "", this );
 }
 
 FilePlayback* Audio::getFilePlayer()
@@ -34,26 +38,26 @@ FilePlayback* Audio::getFilePlayer()
     return &filePlayer;
 }
 
-void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message)
-{ 
-    if (message.isNoteOnOrOff())
+void Audio::handleIncomingMidiMessage ( MidiInput* source, const MidiMessage& message )
+{
+    if ( message.isNoteOnOrOff() )
     {
-        if (message.getVelocity() == 0)
+        if ( message.getVelocity() == 0 )
         {
-            DBG ("Note Off");
+            DBG ( "Note Off" );
         }
         else
         {
-            DBG ("Note On : Channel " << message.getChannel() << " , Note Number " << message.getNoteNumber() << " , Note in Hertz " << message.getMidiNoteInHertz(message.getNoteNumber()) << "Hz , Velocity " << message.getVelocity());
+            DBG ( "Note On : Channel " << message.getChannel() << " , Note Number " << message.getNoteNumber() << " , Note in Hertz " << message.getMidiNoteInHertz ( message.getNoteNumber() ) << "Hz , Velocity " << message.getVelocity() );
         }
     }
 }
 
-void Audio::audioDeviceIOCallback (const float** inputChannelData,
+void Audio::audioDeviceIOCallback ( const float** inputChannelData,
                                            int numInputChannels,
                                            float** outputChannelData,
                                            int numOutputChannels,
-                                           int numSamples)
+                                           int numSamples )
 {
     //All audio processing is done here
     const float* inL = inputChannelData[0];
@@ -61,25 +65,17 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     float *outL = outputChannelData[0];
     float *outR = outputChannelData[1];
     
-    while(numSamples--)
+    while (numSamples--)
     {
-        *outL = filePlayer.processSampleL(*outL);
+        *outL = filePlayer.processSample (*outL);
+        
+        *outL = lpf.applyFilter (*outL);
 
-//        *outL = bpf[0].applyFilter(*outL) * gain[0]; // get gain from gainslider!
-//        *outL = bpf[1].applyFilter(*outL) * gain[1]; // gain array not needed
-//        *outL = bpf[2].applyFilter(*outL) * gain[2];
-        
-        *outL = lpf.applyFilter(*outL);
-    
-        *outL = hpf.applyFilter(*outL);
-        
-//        *outL = bpf[0].applyFilter(*outL) * getBPF(1)->setGain(<#float newGain#>);
-//        *outL = bpf[1].applyFilter(*outL) * getBPF(2)->setGain(<#float newGain#>);
-//        *outL = bpf[2].applyFilter(*outL) * getBPF(3)->setGain(<#float newGain#>);
-        
-        *outL = bpf[0].applyFilter(*outL);
-        *outL = bpf[1].applyFilter(*outL);
-        *outL = bpf[2].applyFilter(*outL);
+        *outL = hpf.applyFilter (*outL);
+
+        *outL = bpf[0].applyFilter (*outL);
+        *outL = bpf[1].applyFilter (*outL);
+        *outL = bpf[2].applyFilter (*outL);
 
         *outR = *outL;
         
@@ -89,15 +85,15 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     }
 }
 
-void Audio::audioDeviceAboutToStart (AudioIODevice* device)
+void Audio::audioDeviceAboutToStart ( AudioIODevice* device )
 {
     samplerate = device->getCurrentSampleRate();
     filePlayer.setSamplerate (samplerate);
-    bpf[0].setFilter(samplerate, 100.f, 0.1f);
-    bpf[1].setFilter(samplerate, 300.f, 0.1f);
-    bpf[2].setFilter(samplerate, 3000.0f, 0.1f);
-    lpf.setFilter(samplerate, 2000.0f, 0.5f);
-    hpf.setFilter(samplerate, 100.0f, 0.5f);
+    bpf[0].setFilter ( samplerate, 100.f, 0.1f );
+    bpf[1].setFilter ( samplerate, 300.f, 0.1f );
+    bpf[2].setFilter ( samplerate, 3000.0f, 0.1f );
+    lpf.setFilter ( samplerate, 2000.0f, 0.5f );
+    hpf.setFilter ( samplerate, 100.0f, 0.5f );
 }
 
 void Audio::audioDeviceStopped()
@@ -105,33 +101,20 @@ void Audio::audioDeviceStopped()
 
 }
 
-void Audio::setLPF(float frequency, float q)
+void Audio::setLPF ( float frequency, float q )
 {
-    lpf.setFilter(samplerate, frequency, q);
+    lpf.setFilter ( samplerate, frequency, q );
 }
 
-void Audio::setHPF(float frequency, float q)
+void Audio::setHPF ( float frequency, float q )
 {
     hpf.setFilter(samplerate, frequency, q);
 }
 
-void Audio::setBPF(float frequency, float q)
+void Audio::setBPF ( float frequency, float q )
 {
     for (int i = 0; i < 3; i++)
     {
-        bpf[i].setFilter(samplerate, frequency, q);
+        bpf[i].setFilter ( samplerate, frequency, q );
     }
 }
-
-//void Audio::setGain(float newGain[3])
-//{
-//    for (int i = 0; i < 3; i++)
-//    {
-//        gain[i] = newGain[i];
-//    }
-//}
-
-//void Audio::setGain(float newGain)
-//{
-//    gain = newGain;
-//}
