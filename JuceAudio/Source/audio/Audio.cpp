@@ -67,17 +67,18 @@ void Audio::audioDeviceIOCallback ( const float** inputChannelData,
     
     while (numSamples--)
     {
-        *outL = filePlayer.processSample ( *outL );
+        float sample = filePlayer.processSample ( *outL );
+        float output = 0.0f;
         
-        *outL = lpf.applyFilter ( *outL) ;
+        output = bpf[0].applyFilter ( sample );
+        output += bpf[1].applyFilter ( sample );
+        output += bpf[2].applyFilter ( sample );
+        
+        output = lpf.applyFilter ( output );
 
-        *outL = hpf.applyFilter ( *outL );
+        output = hpf.applyFilter ( output );
 
-        *outL = bpf[0].applyFilter ( *outL );
-        *outL = bpf[1].applyFilter ( *outL );
-        *outL = bpf[2].applyFilter ( *outL );
-
-        *outR = *outL;
+        *outR = *outL = output;
         
         inL++;
         outL++;
